@@ -246,32 +246,32 @@ export const projects: Project[] = [
   },
   {
     id: '7',
-    slug: 'singapore-nlm',
-    title: 'Singapore National Library Competition',
-    year: 2015,
+    slug: 'the-stonor',
+    title: 'the stonor',
+    year: 2022,
     location: 'kuala lumpur',
     detailContent: [
       {
         type: 'text',
-        content: 'the library was a competition which ken yeang entered together with zlg for the earliest part of the design. later huat joined ken yeang’s partner based in singapore and continued to work on tje detail design and working drawings. colin okashimo and huat worked towards the final stages of putting in a biophilc approach to the project. ' 
+        content: 'the stonor is a development that is conceptually a reflection of modern urban life. it is iconic in terms of its arrival statement- rather than its facade design. open plan high ceilings and natural finishes are abundant and telling characteristics of the spaces on the ground floor.' 
       },
       {
         type: 'text',
-        content: 'the project is unique becuase otbwas designer to have two parts the forma and the informal - and in between this were public realms and general circulation which brought immense daylight into the center of the building.'
+        content: 'all apartments have high ceiling and a general sense of openness and tranquil geometry - an attestation to beauty, ease, comfort and sophistication. expanding on the urban room concept each apartment has the opportunity to be open to the sky and engage with views to the city or the street life of jalan stonor. nature is constant theme throughout the common areas- a secret garden welcomes every resident home before they emerge from their vehicles. on the roof the trees and lush gardens welcome the arrival of residents again by the pool and the gym facilities. energy is a major consideration and asset to be contend with for this project - we respect daylight factor and the careful use of resources for lighting and indoor air quality.'
       },
       {
         type: 'text',
-        content: 'huat produced hand drawings and sketches for the competition entry.'
+        content: 'the porosity of the ground levels and the open deck concept at the pool leaves are clear demarcations of how urban lifestyles should evolve into rien next generation and typology. never anywhere has anything of this sort been implemented for city dwellers. engagement with nature without compromising security or safety of residents of any generation.'
       },
     ],
-    heroImage: '/projects/singapore-nlb/CP.avif',
+    heroImage: '/projects/the-stonor/CP.avif',
     images: [
-      '/projects/singapore-nlb/CP.avif',
-      '/projects/singapore-nlb/A1.avif',
-      '/projects/singapore-nlb/A2.avif',
-      '/projects/singapore-nlb/A3.avif',
-      '/projects/singapore-nlb/A4.avif',
-      '/projects/singapore-nlb/A5.avif',
+      '/projects/the-stonor/CP.avif',
+      '/projects/the-stonor/A1.avif',
+      '/projects/the-stonor/A2.avif',
+      '/projects/the-stonor/A3.avif',
+      '/projects/the-stonor/A4.avif',
+      '/projects/the-stonor/A5.avif',
     ],
   },
 ];

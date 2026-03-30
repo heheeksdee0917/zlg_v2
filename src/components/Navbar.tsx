@@ -70,76 +70,64 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Navbar Bar */}
+      {/* ── Navbar Bar ── */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-[500] transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'
-          }`}
-        style={{ background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)' }}
+        className={`fixed top-0 left-0 right-0 z-[500] transition-transform duration-300 ${
+          isVisible && !menuOpen ? 'translate-y-0' : menuOpen ? '-translate-y-full' : '-translate-y-full'
+        }`}
+        style={{ background: '#F5FaF7' }}
       >
-        <div className="max-w-screen-2xl mx-auto px-8 py-6 flex items-center justify-between">
-          <div className="flex items-center space-x-12">
+        <div className="max-w-screen-2xl mx-auto px-8 py-4 md:py-6 flex items-center justify-between">
+          <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center" onClick={closeMenu}>
-              <img src="/logo(white).png" alt="ZLG Design" className="h-6" />
+              <img src="/general/logo(zlg_green).png" alt="ZLG Design" className="h-6" />
             </Link>
-            <span className="text-sm text-white lowercase leading-none">zlgdesign</span>
+            <span className="text-sm text-[#185B30] lowercase leading-none">zlgdesign</span>
           </div>
 
-          {/* Hamburger */}
-          <button
-            onClick={toggleMenu}
-            className="text-white hover:text-gray-200 transition-colors flex items-center justify-center"
-            aria-label="Toggle menu"
-          >
-            <div className="relative w-5 h-4 flex flex-col justify-between">
-              <span className={`block w-full h-[2px] bg-white transform transition-all duration-300 origin-center ${menuOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
-              <span className={`block w-full h-[2px] bg-white transform transition-all duration-300 ${menuOpen ? 'opacity-0' : 'opacity-100'}`} />
-              <span className={`block w-full h-[2px] bg-white transform transition-all duration-300 origin-center ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
-            </div>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleMenu}
+              className="text-black hover:text-gray-500 transition-colors flex items-center justify-center"
+              aria-label="Toggle menu"
+            >
+              <div className="relative w-5 h-3 flex flex-col justify-between">
+                <span className="block w-full h-[2px] bg-[#185B30] transform transition-all duration-300 origin-center" />
+                <span className="block w-full h-[2px] bg-[#185B30] transform transition-all duration-300 origin-center" />
+              </div>
+            </button>
+            <span className="text-sm text-[#185B30] lowercase leading-none">menu</span>
+          </div>
         </div>
       </nav>
 
-      {/* ── DESKTOP OVERLAY — full green bg + floating image ── */}
+      {/* ── DESKTOP OVERLAY ── */}
       <div
         className="hidden md:flex fixed inset-0 z-[499] transition-opacity duration-500 ease-in-out"
         style={{
-          background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)',
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'auto' : 'none',
         }}
       >
-        {/* Navigation links — full width, but content offset left */}
-        <div className="flex flex-col justify-center px-20 w-full">
-          <div className="flex flex-col space-y-2 max-w-[55%]">
-            {navItems.map((item, index) => (
-              <Link
-                key={item.title}
-                to={item.link}
-                onClick={closeMenu}
-                className="group flex items-center gap-6 py-4 border-b border-white/10 last:border-none"
-                onMouseEnter={() => setHoveredColumn(index)}
-                onMouseLeave={() => setHoveredColumn(null)}
-              >
-                <span className="text-white/30 text-xs font-light w-6">
-                  0{index + 1}
-                </span>
-                <span
-                  className="text-4xl md:text-5xl font-extralight lowercase text-white transition-all duration-300"
-                  style={{ opacity: hoveredColumn === null || hoveredColumn === index ? 1 : 0.3 }}
-                >
-                  {item.title}
-                </span>
-                {isActive(item.link) && (
-                  <span className="ml-auto w-2 h-2 rounded-full bg-white opacity-70" />
-                )}
-              </Link>
-            ))}
-          </div>
+        {/* 30% — blurred zone, close button top-right */}
+        <div
+          className="relative flex-shrink-0"
+          style={{ width: '30%', backdropFilter: 'blur(8px)', backgroundColor: 'rgba(0,0,0,0.15)' }}
+          onClick={closeMenu}
+        >
+          <button
+            onClick={closeMenu}
+            className="absolute top-6 right-6 w-9 h-9 rounded-full border border-white/60 bg-white flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm"
+            aria-label="Close menu"
+          >
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M1 1L13 13M13 1L1 13" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
         </div>
 
-        {/* Floating image — absolute, right side, inset with margin so it floats */}
-        {/* Floating image — full bleed, right side */}
-        <div className="absolute right-0 top-0 bottom-0 w-[40%] overflow-hidden">
+        {/* 35% — full bleed image carousel */}
+        <div className="relative overflow-hidden flex-shrink-0" style={{ width: '35%' }}>
           {carouselImages.map((img, index) => (
             <div
               key={index}
@@ -150,7 +138,6 @@ export default function Navbar() {
               }}
             />
           ))}
-          <div className="absolute inset-0 bg-black/10" />
 
           {/* Dot indicators */}
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
@@ -158,42 +145,110 @@ export default function Navbar() {
               <button
                 key={i}
                 onClick={() => setCarouselSlide(i)}
-                className={`h-px transition-all duration-500 ${i === carouselSlide ? 'w-8' : 'w-4'}`}
-                style={{ backgroundColor: i === carouselSlide ? '#ffffff' : '#ffffff66' }}
+                className="h-px transition-all duration-500"
+                style={{
+                  width: i === carouselSlide ? '2rem' : '1rem',
+                  backgroundColor: i === carouselSlide ? '#ffffff' : '#ffffff66',
+                }}
               />
             ))}
           </div>
         </div>
+
+        {/* 35% — nav links panel */}
+        <div
+          className="flex flex-col justify-center px-20 relative flex-shrink-0"
+          style={{ width: '35%', backgroundColor: '#F5FAF7' }}
+        >
+          <div className="flex flex-col space-y-0">
+            {navItems.map((item, index) => {
+              const active = isActive(item.link);
+              return (
+                <Link
+                  key={item.title}
+                  to={item.link}
+                  onClick={closeMenu}
+                  className="group flex items-center gap-4 py-2 border-b border-black/10 last:border-none"
+                  onMouseEnter={() => setHoveredColumn(index)}
+                  onMouseLeave={() => setHoveredColumn(null)}
+                >
+                  <span className="text-black/30 text-[10px] font-light w-5">
+                    0{index + 1}
+                  </span>
+                  <span
+                    className="text-xl lowercase transition-all duration-300"
+                    style={{
+                      fontWeight: active ? 700 : 300,
+                      color: active
+                        ? '#185B30'
+                        : hoveredColumn === null || hoveredColumn === index
+                        ? '#000000'
+                        : '#00000044',
+                    }}
+                  >
+                    {item.title}
+                  </span>
+                  {active && (
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#185B30] opacity-70" />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Logo + wordmark — bottom of panel */}
+          <div className="absolute bottom-8 left-20 flex items-center space-x-3">
+            <img src="/logo(black).png" alt="ZLG Design" className="h-6" />
+            <span className="text-sm text-black lowercase leading-none">zlgdesign</span>
+          </div>
+        </div>
       </div>
 
-      {/* ── MOBILE OVERLAY — text only ── */}
+      {/* ── MOBILE OVERLAY ── */}
       <div
         className="md:hidden fixed inset-0 z-[499] transition-opacity duration-500 ease-in-out"
         style={{
-          background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)',
+          backgroundColor: '#F5FAF7',
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'auto' : 'none',
         }}
       >
+        {/* Close button */}
+        <button
+          onClick={closeMenu}
+          className="absolute top-6 right-6 w-9 h-9 rounded-full border border-black/20 flex items-center justify-center hover:bg-black/5 transition-colors"
+          aria-label="Close menu"
+        >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M1 1L13 13M13 1L1 13" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+        </button>
+
         <div className="flex flex-col items-start justify-center h-full space-y-6 px-10">
-          {navItems.map((item, index) => (
-            <Link
-              key={item.title}
-              to={item.link}
-              onClick={closeMenu}
-              className="group flex items-center gap-4"
-            >
-              <span className="text-white/30 text-xs font-light">
-                0{index + 1}
-              </span>
-              <span
-                className={`text-3xl font-extralight lowercase transition-opacity duration-300 ${isActive(item.link) ? 'text-white' : 'text-white/80'
-                  }`}
+          {navItems.map((item, index) => {
+            const active = isActive(item.link);
+            return (
+              <Link
+                key={item.title}
+                to={item.link}
+                onClick={closeMenu}
+                className="group flex items-center gap-4"
               >
-                {item.title}
-              </span>
-            </Link>
-          ))}
+                <span className="text-black/30 text-xs font-light">
+                  0{index + 1}
+                </span>
+                <span
+                  className="text-3xl lowercase transition-all duration-300"
+                  style={{
+                    fontWeight: active ? 700 : 300,
+                    color: active ? '#185B30' : '#000000cc',
+                  }}
+                >
+                  {item.title}
+                </span>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </>

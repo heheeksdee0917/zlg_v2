@@ -95,18 +95,19 @@ export default function Home() {
 
           {/* Text — bottom, center-aligned */}
           <div className="absolute z-20 bottom-16 left-0 right-0 flex flex-col items-center text-white text-center px-8">
-            <h1
-              className="fade-up text-4xl md:text-4xl font-bold lowercase mb-2"
-              style={{ animationDelay: '0.35s' }}
-            >
-              zlgdesign
-            </h1>
-            <p
-              className="fade-up text-xs tracking-[0.1em] lowercase font-light mb-6 opacity-60"
+          <p
+              className="fade-up text-xs tracking-[0.1em] lowercase font-light mb-2 opacity-60"
               style={{ animationDelay: '0.2s' }}
             >
               design | architecture | archives | theory
             </p>
+            <h1
+              className="fade-up text-4xl md:text-4xl font-bold lowercase mb-4"
+              style={{ animationDelay: '0.35s' }}
+            >
+              zlgdesign
+            </h1>
+
 
             <Link
               to="/projects"
@@ -167,10 +168,10 @@ export default function Home() {
           {/* Text — bottom center on mobile, overlaps on desktop */}
           <div className="absolute inset-x-0 bottom-0 h-1/2 md:inset-0 md:h-auto z-10 flex items-center px-8 md:px-0">
             <div className="md:ml-[45%] max-w-none w-full text-center md:text-left">
-              <p className="text-xs tracking-[0.1em] lowercase font-light mb-3 opacity-60">
+              <p className="text-xs tracking-[0.1em] lowercase font-light mb-1 opacity-60">
                 founder's quote
               </p>
-              <p className="text-2xl md:text-4xl font-normal leading-relaxed lowercase tracking-wide mb-3">
+              <p className="text-2xl md:text-4xl font-normal leading-tight lowercase tracking-wide mb-2">
                 Thought is a form of necessary action,{' '}
                 <br />a precursor to a possible work of art.<br />
               </p>
@@ -207,13 +208,13 @@ export default function Home() {
           <div className="absolute inset-0 bg-black/40" />
 
           <div className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center px-8">
-            <p className="text-xs tracking-[0.1em] lowercase font-light text-white/60 mb-4">
+            <p className="text-xs tracking-[0.1em] lowercase font-light text-white/60 mb-2">
               our network
             </p>
-            <h2 className="text-4xl md:text-5xl font-extralight lowercase text-white mb-6">
+            <h2 className="text-4xl md:text-5xl font-extralight lowercase text-white mb-3">
               partners
             </h2>
-            <p className="text-base font-light text-white/80 lowercase leading-relaxed max-w-lg mb-10">
+            <p className="text-base font-light text-white/80 lowercase leading-relaxed max-w-lg mb-6">
               decades of collaboration with exceptional architects, designers, and specialists who share our vision of design excellence.
             </p>
             <a

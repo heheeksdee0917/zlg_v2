@@ -12,23 +12,45 @@ function HeroSection() {
   }, []);
 
   const vh = typeof window !== 'undefined' ? window.innerHeight : 800;
+  const totalHeight = vh * 2; // 300vh total section, 2 transitions
 
-  const snapIndex = Math.min(2, Math.floor(scrollY / (vh * 0.8)));
+  // Normalised scroll progress per panel (0→1)
+  // Panel 1 occupies scroll 0 – vh, Panel 2: vh – 2vh, Panel 3: 2vh+
+  const clamp = (v: number, min = 0, max = 1) => Math.min(max, Math.max(min, v));
 
-  const imageBlur = snapIndex >= 1 ? 8 : 0;
-  const overlayOpacity = snapIndex >= 1 ? 0.6 : 0;
+  const p1Out = clamp(scrollY / (vh * 0.6));           // panel 1 fades out over first 60vh
+  const p2In  = clamp((scrollY - vh * 0.4) / (vh * 0.5)); // panel 2 fades in from 40vh
+  const p2Out = clamp((scrollY - vh * 1.0) / (vh * 0.5)); // panel 2 fades out from 1×vh
+  const p3In  = clamp((scrollY - vh * 1.2) / (vh * 0.5)); // panel 3 fades in from 1.2×vh
 
-  const PanelContent = ({ text, heading, imgSrc }: { text: string; heading?: string; imgSrc: string }) => (
+  const panel1Opacity = 1 - p1Out;
+  const panel2Opacity = Math.min(p2In, 1 - p2Out);
+  const panel3Opacity = p3In;
+
+  // Blur starts immediately, maxes at 8px by the time panel 2 is fully in
+  const imageBlur = clamp(scrollY / (vh * 0.8)) * 8;
+  // Overlay starts immediately too, maxes at 0.55
+  const overlayOpacity = clamp(scrollY / (vh * 0.9)) * 0.55;
+
+  const PanelContent = ({
+    text, heading, imgSrc,
+  }: { text: string; heading?: string; imgSrc: string }) => (
     <div className="w-full flex items-center justify-between px-8 md:px-16 max-w-screen-2xl mx-auto">
       <div className="max-w-2xl">
-        {heading && <h2 className="text-base font-normal mb-4 lowercase underline text-white">{heading}</h2>}
+        {heading && (
+          <h2 className="text-base font-normal mb-4 lowercase underline text-white">{heading}</h2>
+        )}
         <p className="text-base text-white leading-relaxed lowercase text-left">{text}</p>
       </div>
       <div
         className="hidden md:block flex-shrink-0 overflow-hidden"
-        style={{ height: '75vh', aspectRatio: '2/3', animation: 'floatPhoto 6s ease-in-out infinite' }}
+        style={{
+          height: '75vh',
+          aspectRatio: '2/3',
+          animation: 'floatPhoto 6s ease-in-out infinite',
+        }}
       >
-        <img src={imgSrc} alt="" className="w-full h-full object-cover object-center" />
+        <img src={imgSrc} alt="" className="w-full h-full object-cover object-center" loading="lazy" />
       </div>
     </div>
   );
@@ -42,10 +64,13 @@ function HeroSection() {
           100% { transform: translateY(0px); }
         }
       `}</style>
-      <img src="/general/Philosophy.avif" alt="" className="hidden" fetchPriority="high" />
+
+      {/* Preload */}
+      <img src="/general/Philosophy.avif" alt="" className="hidden" fetchPriority="high" loading="eager" />
+
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
-        {/* Background image — fixed, never moves */}
+        {/* Background image — blurs gradually from scroll 0 */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -53,32 +78,28 @@ function HeroSection() {
             backgroundPosition: 'center',
             filter: `blur(${imageBlur}px)`,
             transform: 'scale(1.05)',
-            transition: 'filter 0.8s ease',
           }}
         />
 
-        {/* Dark overlay — snaps on at panel 2, stays fixed */}
+        {/* Dark overlay — starts immediately */}
         <div
           className="absolute inset-0 bg-black"
-          style={{
-            opacity: overlayOpacity,
-            transition: 'opacity 0.5s ease',
-          }}
+          style={{ opacity: overlayOpacity }}
         />
 
         {/* Panel 1 — title */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 transition-opacity duration-500"
-          style={{ opacity: snapIndex === 0 ? 1 : 0 }}
+          className="absolute inset-0 flex flex-col items-center justify-center text-center px-8"
+          style={{ opacity: panel1Opacity }}
         >
-          <p className="text-xs tracking-[0.3em] lowercase font-light text-white/60 mb-4">our thinking</p>
+          <p className="text-xs tracking-[0.3em] lowercase font-light text-white/90 mb-1">our thinking</p>
           <h1 className="text-4xl md:text-5xl font-extralight lowercase text-white">philosophy</h1>
         </div>
 
         {/* Panel 2 */}
         <div
-          className="absolute inset-0 flex items-center transition-opacity duration-500"
-          style={{ opacity: snapIndex === 1 ? 1 : 0 }}
+          className="absolute inset-0 flex items-center"
+          style={{ opacity: panel2Opacity }}
         >
           <PanelContent
             heading="Our Philosophy"
@@ -89,8 +110,8 @@ function HeroSection() {
 
         {/* Panel 3 */}
         <div
-          className="absolute inset-0 flex items-center transition-opacity duration-500"
-          style={{ opacity: snapIndex === 2 ? 1 : 0 }}
+          className="absolute inset-0 flex items-center"
+          style={{ opacity: panel3Opacity }}
         >
           <PanelContent
             text="I think architecture is taking much longer to becoming like what good art is, it is not so generative and it is not always assuming an emotive role, like a good work of art does. We think that it is possible for us to connect to our buildings as easily as we can connect to art, or to our music, or to things that we adore, like our children or our books."
@@ -114,34 +135,22 @@ export default function Philosophy() {
     return () => clearTimeout(timer);
   }, []);
 
-  // Re-runs after every render to pick up newly lazy-loaded sections
   useEffect(() => {
-    const observerOptions = {
-      threshold: 0.05,
-      rootMargin: '0px 0px 0px 0px'
-    };
-
+    const observerOptions = { threshold: 0.05, rootMargin: '0px 0px 0px 0px' };
     const observerCallback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const sectionId = entry.target.getAttribute('data-section');
-          if (sectionId) {
-            setVisibleSections(prev => ({ ...prev, [sectionId]: true }));
-          }
+          if (sectionId) setVisibleSections(prev => ({ ...prev, [sectionId]: true }));
         }
       });
     };
-
     const observer = new IntersectionObserver(observerCallback, observerOptions);
-    Object.values(sectionRefs.current).forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
+    Object.values(sectionRefs.current).forEach((ref) => { if (ref) observer.observe(ref); });
     return () => observer.disconnect();
   });
 
-  const setRef = (id: string) => (el: HTMLElement | null) => {
-    sectionRefs.current[id] = el;
-  };
+  const setRef = (id: string) => (el: HTMLElement | null) => { sectionRefs.current[id] = el; };
 
   const renderSection = (section: typeof philosophySections[0], index: number) => {
     const isVisible = visibleSections[section.id];
@@ -200,14 +209,7 @@ export default function Philosophy() {
           <section key={section.id} ref={setRef(section.id)} data-section={section.id} className="bg-[#F5FAF7] py-4 relative min-h-[100vh] flex items-start" style={{ justifyContent: section.content.layout === 'center' ? 'center' : 'flex-start' }}>
             <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${section.content.image})`, opacity: 0.5 }} />
             <div className={`relative z-10 transition-all duration-1000 ease-out px-8 ${section.content.layout === 'center' ? 'max-w-2xl mx-auto text-left' : 'w-full md:pl-28 md:pr-16'} ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <div style={{
-                background: 'rgba(255, 255, 255, 0.1)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.2)',
-                borderRadius: '32px',
-                padding: '2.5rem',
-              }}>
+              <div style={{ background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '32px', padding: '2.5rem' }}>
                 <h3 className="text-2xl font-light text-[#185B30] mb-6 lowercase">{section.title}</h3>
                 {section.content.text?.map((p, i) => (
                   <p key={i} className="text-base text-[#185B30] leading-relaxed mb-4 last:mb-0 lowercase">{p}</p>
