@@ -36,10 +36,10 @@ export const projects: Project[] = [
     ],
     heroImage: '/projects/tepian-tunku/A4.avif',
     images: [
-      '/projects/tepian-tunku/A1.avif',
-      '/projects/tepian-tunku/A2.avif',
-      '/projects/tepian-tunku/A3.avif',
       '/projects/tepian-tunku/A4.avif',
+      '/projects/tepian-tunku/A3.avif',
+      '/projects/tepian-tunku/A2.avif',
+      '/projects/tepian-tunku/A1.avif',
       '/projects/tepian-tunku/A5.avif',
       '/projects/tepian-tunku/A6.avif',
     ],

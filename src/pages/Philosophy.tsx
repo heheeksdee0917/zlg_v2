@@ -3,38 +3,40 @@ import { philosophySections } from '../data/philosophy';
 import LazyLoading from '../components/LazyLoading';
 
 function HeroSection() {
-  const [scrollY, setScrollY] = useState(0);
+  const [panel, setPanel] = useState(0);
+  const isAnimating = useRef(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const handleWheel = (e: WheelEvent) => {
+      const section = sectionRef.current;
+      if (!section) return;
 
-  const vh = typeof window !== 'undefined' ? window.innerHeight : 800;
-  const totalHeight = vh * 2; // 300vh total section, 2 transitions
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      if (!inView) return; // only intercept when hero is in view
 
-  // Normalised scroll progress per panel (0→1)
-  // Panel 1 occupies scroll 0 – vh, Panel 2: vh – 2vh, Panel 3: 2vh+
-  const clamp = (v: number, min = 0, max = 1) => Math.min(max, Math.max(min, v));
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const next = panel + direction;
 
-  const p1Out = clamp(scrollY / (vh * 0.6));           // panel 1 fades out over first 60vh
-  const p2In  = clamp((scrollY - vh * 0.4) / (vh * 0.5)); // panel 2 fades in from 40vh
-  const p2Out = clamp((scrollY - vh * 1.0) / (vh * 0.5)); // panel 2 fades out from 1×vh
-  const p3In  = clamp((scrollY - vh * 1.2) / (vh * 0.5)); // panel 3 fades in from 1.2×vh
+      // If scrolling down past last panel or up before first, let page scroll
+      if (next < 0 || next > 2) return;
 
-  const panel1Opacity = 1 - p1Out;
-  const panel2Opacity = Math.min(p2In, 1 - p2Out);
-  const panel3Opacity = p3In;
+      e.preventDefault();
+      if (isAnimating.current) return;
 
-  // Blur starts immediately, maxes at 8px by the time panel 2 is fully in
-  const imageBlur = clamp(scrollY / (vh * 0.8)) * 8;
-  // Overlay starts immediately too, maxes at 0.55
-  const overlayOpacity = clamp(scrollY / (vh * 0.9)) * 0.55;
+      setPanel(next);
+      isAnimating.current = true;
+      setTimeout(() => { isAnimating.current = false; }, 800);
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [panel]); // panel in deps so next calculation is always fresh
 
   const PanelContent = ({
-    text, heading, imgSrc,
-  }: { text: string; heading?: string; imgSrc: string }) => (
+    text, heading, imgSrc, imgPosition = 'center',
+  }: { text: string; heading?: string; imgSrc: string; imgPosition?: string }) => (
     <div className="w-full flex items-center justify-between px-8 md:px-16 max-w-screen-2xl mx-auto">
       <div className="max-w-2xl">
         {heading && (
@@ -44,19 +46,15 @@ function HeroSection() {
       </div>
       <div
         className="hidden md:block flex-shrink-0 overflow-hidden"
-        style={{
-          height: '75vh',
-          aspectRatio: '2/3',
-          animation: 'floatPhoto 6s ease-in-out infinite',
-        }}
+        style={{ height: '75vh', aspectRatio: '2/3', animation: 'floatPhoto 6s ease-in-out infinite' }}
       >
-        <img src={imgSrc} alt="" className="w-full h-full object-cover object-center" loading="lazy" />
+        <img src={imgSrc} alt="" className="w-full h-full object-cover" style={{ objectPosition: imgPosition }} loading="lazy" />
       </div>
     </div>
   );
 
   return (
-    <section className="relative h-[300vh]">
+    <section ref={sectionRef} className="relative h-[150vh]">
       <style>{`
         @keyframes floatPhoto {
           0%   { transform: translateY(0px); }
@@ -65,32 +63,30 @@ function HeroSection() {
         }
       `}</style>
 
-      {/* Preload */}
-      <img src="/general/Philosophy.avif" alt="" className="hidden" fetchPriority="high" loading="eager" />
+      <img src="/general/Philosophy.avif" alt="" className="hidden" />
 
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
-        {/* Background image — blurs gradually from scroll 0 */}
+        {/* Background */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center transition-all duration-700"
           style={{
             backgroundImage: `url('/general/Philosophy.avif')`,
-            backgroundPosition: 'center',
-            filter: `blur(${imageBlur}px)`,
+            filter: panel > 0 ? 'blur(8px)' : 'blur(0px)',
             transform: 'scale(1.05)',
           }}
         />
 
-        {/* Dark overlay — starts immediately */}
+        {/* Overlay */}
         <div
-          className="absolute inset-0 bg-black"
-          style={{ opacity: overlayOpacity }}
+          className="absolute inset-0 bg-black transition-opacity duration-700"
+          style={{ opacity: panel > 0 ? 0.55 : 0 }}
         />
 
-        {/* Panel 1 — title */}
+        {/* Panel 1 */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-8"
-          style={{ opacity: panel1Opacity }}
+          className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 transition-opacity duration-700"
+          style={{ opacity: panel === 0 ? 1 : 0, pointerEvents: panel === 0 ? 'auto' : 'none' }}
         >
           <p className="text-xs tracking-[0.3em] lowercase font-light text-white/90 mb-1">our thinking</p>
           <h1 className="text-4xl md:text-5xl font-extralight lowercase text-white">philosophy</h1>
@@ -98,27 +94,42 @@ function HeroSection() {
 
         {/* Panel 2 */}
         <div
-          className="absolute inset-0 flex items-center"
-          style={{ opacity: panel2Opacity }}
+          className="absolute inset-0 flex items-center transition-opacity duration-700"
+          style={{ opacity: panel === 1 ? 1 : 0, pointerEvents: panel === 1 ? 'auto' : 'none' }}
         >
           <PanelContent
             heading="Our Philosophy"
-            text="In 1992 when susanne and me started thinking of doing competitions our focus was only design and ever since our work revolved around ideas and concepts that go beyond what was then always a pre-defined architectural pursuit or entity. We had simply wanted to do architecture that would not only engage the human spirit, but also something with a deep philosophy behind the work."
+            text="In 1992 when susanne and me started thinking of doing competitions our focus was only design and ever since our work revolved around ideas and concepts that go beyond what was then always a pre-defined architectural pursuit or entity."
             imgSrc="/general/zlg_livingroom1.avif"
           />
         </div>
 
         {/* Panel 3 */}
         <div
-          className="absolute inset-0 flex items-center"
-          style={{ opacity: panel3Opacity }}
+          className="absolute inset-0 flex items-center transition-opacity duration-700"
+          style={{ opacity: panel === 2 ? 1 : 0, pointerEvents: panel === 2 ? 'auto' : 'none' }}
         >
           <PanelContent
-            text="I think architecture is taking much longer to becoming like what good art is, it is not so generative and it is not always assuming an emotive role, like a good work of art does. We think that it is possible for us to connect to our buildings as easily as we can connect to art, or to our music, or to things that we adore, like our children or our books."
+            text="I think architecture is taking much longer to becoming like what good art is, it is not so generative and it is not always assuming an emotive role, like a good work of art does."
             imgSrc="/general/huatlim.avif"
+            imgPosition="35% center"
           />
         </div>
 
+        {/* Dots */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
+          {[0, 1, 2].map((i) => (
+            <button
+              key={i}
+              onClick={() => setPanel(i)}
+              className="h-px transition-all duration-500"
+              style={{
+                width: i === panel ? '2rem' : '1rem',
+                backgroundColor: i === panel ? '#ffffff' : '#ffffff66',
+              }}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -226,7 +237,7 @@ export default function Philosophy() {
               <h2 className="text-base font-normal mb-8 text-[#185B30]">{section.title}</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {section.content.publications?.map((pub, i) => (
-                  <div key={i} className={`border border-gray-200 transition-all duration-1000 ease-out hover:shadow-lg flex flex-col overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${(i + 2) * 100}ms` }}>
+                  <div key={i} className={`border border-gray-200 transition-all duration-1000 ease-out flex flex-col overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${(i + 2) * 100}ms` }}>
                     <div className="w-full aspect-[2/3] bg-gray-100 overflow-hidden">
                       <img src={pub.image} alt={pub.title} className="w-full h-full object-cover" />
                     </div>

@@ -167,7 +167,7 @@ export default function Home() {
 
           {/* Text — bottom center on mobile, overlaps on desktop */}
           <div className="absolute inset-x-0 bottom-0 h-1/2 md:inset-0 md:h-auto z-10 flex items-center px-8 md:px-0">
-            <div className="md:ml-[45%] max-w-none w-full text-center md:text-left">
+            <div className="md:ml-[45%] max-w-none w-full text-left md:text-left">
               <p className="text-xs tracking-[0.1em] lowercase font-light mb-1 opacity-60">
                 founder's quote
               </p>

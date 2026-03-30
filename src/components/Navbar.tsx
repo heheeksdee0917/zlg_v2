@@ -49,14 +49,14 @@ export default function Navbar() {
     const handleInnerScroll = (e: Event) => {
       const target = e.target as HTMLElement;
       if (target.scrollHeight > target.clientHeight) {
-        setIsVisible(target.scrollTop <= 50);
+        setIsVisible(target.scrollTop <= 10);
       }
     };
 
     let timeoutId: NodeJS.Timeout | null = null;
     const throttled = () => {
       if (timeoutId) return;
-      timeoutId = setTimeout(() => { handleScroll(); timeoutId = null; }, 100);
+      timeoutId = setTimeout(() => { handleScroll(); timeoutId = null; }, 30);
     };
 
     window.addEventListener('scroll', throttled, { passive: true });
@@ -72,17 +72,22 @@ export default function Navbar() {
     <>
       {/* ── Navbar Bar ── */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-[500] transition-transform duration-300 ${
-          isVisible && !menuOpen ? 'translate-y-0' : menuOpen ? '-translate-y-full' : '-translate-y-full'
-        }`}
-        style={{ background: '#F5FaF7' }}
+        className={`fixed top-0 left-0 right-0 z-[500] transition-transform duration-300 ${isVisible && !menuOpen ? 'translate-y-0' : menuOpen ? '-translate-y-full' : '-translate-y-full'
+          }`}
+        style={{ background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)' }}
       >
-        <div className="max-w-screen-2xl mx-auto px-8 py-4 md:py-6 flex items-center justify-between">
+        <div className="max-w-screen-2xl mx-auto px-8 py-3 md:py-5 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center" onClick={closeMenu}>
-              <img src="/general/logo(zlg_green).png" alt="zlgdesign" className="h-6" />
+              <img
+                src="/general/logo(white).png"
+                alt="zlgdesign"
+                className="h-6 md:h-7"
+              />
+              <span className="text-sm md:text-base text-white lowercase leading-none ml-3">
+                zlgdesign
+              </span>
             </Link>
-            <span className="text-sm text-[#185B30] lowercase leading-none">zlgdesign</span>
           </div>
 
           <div className="flex items-center gap-2">
@@ -91,12 +96,15 @@ export default function Navbar() {
               className="text-black hover:text-gray-500 transition-colors flex items-center justify-center"
               aria-label="Toggle menu"
             >
-              <div className="relative w-5 h-3 flex flex-col justify-between">
-                <span className="block w-full h-[2px] bg-[#185B30] transform transition-all duration-300 origin-center" />
-                <span className="block w-full h-[2px] bg-[#185B30] transform transition-all duration-300 origin-center" />
+              <div className="relative w-5 h-2 flex flex-col justify-between">
+                <span className="block w-full h-[1.5px] bg-white transform transition-all duration-300 origin-center" />
+                <span className="block w-full h-[2.5px] bg-white transform transition-all duration-300 origin-center" />
               </div>
+              {/* Menu text hidden on mobile */}
+              <span className="hidden md:block text-sm text-white lowercase leading-none ml-2">
+                menu
+              </span>
             </button>
-            <span className="text-sm text-[#185B30] lowercase leading-none">menu</span>
           </div>
         </div>
       </nav>
@@ -112,16 +120,20 @@ export default function Navbar() {
         {/* 30% — blurred zone, close button top-right */}
         <div
           className="relative flex-shrink-0"
-          style={{ width: '30%', backdropFilter: 'blur(8px)', backgroundColor: 'rgba(0,0,0,0.15)' }}
+          style={{
+            width: '30%',
+            backdropFilter: 'blur(8px)',
+            backgroundColor: 'rgba(0,0,0,0.15)'
+          }}
           onClick={closeMenu}
         >
           <button
             onClick={closeMenu}
-            className="absolute top-6 right-6 w-9 h-9 rounded-full border border-white/60 bg-white flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm"
+            className="absolute top-6 right-6 w-9 h-9 rounded-full border border-white/60 bg-[white] flex items-center justify-center hover:bg-gray-100 transition-colors shadow-sm"
             aria-label="Close menu"
           >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M1 1L13 13M13 1L1 13" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="">
+              <path d="M1 1L13 13M13 1L1 13" stroke="#185B30" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
           </button>
         </div>
@@ -158,7 +170,11 @@ export default function Navbar() {
         {/* 35% — nav links panel */}
         <div
           className="flex flex-col justify-center px-20 relative flex-shrink-0"
-          style={{ width: '35%', backgroundColor: '#F5FAF7' }}
+          style={{
+            width: '35%',
+            //backgroundColor: '#F5FAF7',
+            background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)',
+          }}
         >
           <div className="flex flex-col space-y-0">
             {navItems.map((item, index) => {
@@ -168,11 +184,11 @@ export default function Navbar() {
                   key={item.title}
                   to={item.link}
                   onClick={closeMenu}
-                  className="group flex items-center gap-4 py-2 border-b border-black/10 last:border-none"
+                  className="group flex items-center gap-4 py-2 border-b border-white/10 last:border-none"
                   onMouseEnter={() => setHoveredColumn(index)}
                   onMouseLeave={() => setHoveredColumn(null)}
                 >
-                  <span className="text-black/30 text-[10px] font-light w-5">
+                  <span className="text-white/70 text-[10px] font-light w-5">
                     0{index + 1}
                   </span>
                   <span
@@ -180,16 +196,16 @@ export default function Navbar() {
                     style={{
                       fontWeight: active ? 700 : 300,
                       color: active
-                        ? '#185B30'
+                        ? '#FFFFFF'
                         : hoveredColumn === null || hoveredColumn === index
-                        ? '#000000'
-                        : '#00000044',
+                          ? '#D3D3D3'
+                          : '#FFFFFF',
                     }}
                   >
                     {item.title}
                   </span>
                   {active && (
-                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#185B30] opacity-70" />
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-[#FFFFFF] opacity-70" />
                   )}
                 </Link>
               );
@@ -198,8 +214,8 @@ export default function Navbar() {
 
           {/* Logo + wordmark — bottom of panel */}
           <div className="absolute bottom-8 left-20 flex items-center space-x-3">
-            <img src="/logo(black).png" alt="zlgdesign" className="h-6" />
-            <span className="text-sm text-black lowercase leading-none">zlgdesign</span>
+            <img src="/general/logo(white).png" alt="zlgdesign" className="h-6" />
+            <span className="text-sm text-white lowercase leading-none">zlgdesign</span>
           </div>
         </div>
       </div>
@@ -208,7 +224,7 @@ export default function Navbar() {
       <div
         className="md:hidden fixed inset-0 z-[499] transition-opacity duration-500 ease-in-out"
         style={{
-          backgroundColor: '#F5FAF7',
+          background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)',
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'auto' : 'none',
         }}
@@ -216,11 +232,11 @@ export default function Navbar() {
         {/* Close button */}
         <button
           onClick={closeMenu}
-          className="absolute top-6 right-6 w-9 h-9 rounded-full border border-black/20 flex items-center justify-center hover:bg-black/5 transition-colors"
+          className="absolute top-6 right-6 w-9 h-9 rounded-full border border-white/20 flex items-center justify-center hover:bg-black/5 transition-colors"
           aria-label="Close menu"
         >
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M1 1L13 13M13 1L1 13" stroke="black" strokeWidth="1.5" strokeLinecap="round" />
+            <path d="M1 1L13 13M13 1L1 13" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
         </button>
 
@@ -234,14 +250,14 @@ export default function Navbar() {
                 onClick={closeMenu}
                 className="group flex items-center gap-4"
               >
-                <span className="text-black/30 text-xs font-light">
+                <span className="text-white/70 text-xs font-light">
                   0{index + 1}
                 </span>
                 <span
                   className="text-3xl lowercase transition-all duration-300"
                   style={{
                     fontWeight: active ? 700 : 300,
-                    color: active ? '#185B30' : '#000000cc',
+                    color: active ? '#FFFFFF' : '#FFFFFF',
                   }}
                 >
                   {item.title}
