@@ -39,7 +39,7 @@ function HeroSection() {
           style={{ opacity: heroOpacity, transition: 'none' }}
         >
           <p className="text-xs tracking-[0.3em] lowercase font-light text-white/60 mb-4">
-            zlg design
+            zlgdesign
           </p>
           <h1 className="text-4xl md:text-5xl font-extralight lowercase text-white">
             people
@@ -57,7 +57,7 @@ function HeroSection() {
           <div className="max-w-xl">
             <h2 className="text-base font-normal mb-4 lowercase underline text-white">Our Team</h2>
             <p className="text-base text-white/90 leading-relaxed lowercase text-left">
-              ZLG Design is a collective of architects, designers, and thinkers united by a shared passion for creating meaningful spaces. Our diverse backgrounds and expertise enable us to approach each project with fresh perspectives and rigorous craft.
+              zlgdesign is a collective of architects, designers, and thinkers united by a shared passion for creating meaningful spaces. Our diverse backgrounds and expertise enable us to approach each project with fresh perspectives and rigorous craft.
             </p>
           </div>
         </div>

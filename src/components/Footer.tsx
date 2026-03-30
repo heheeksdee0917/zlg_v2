@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="max-w-screen-2xl mx-auto px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div>
-            <h3 className="text-sm font-light tracking-wider mb-4" style={{ color: '#185B30' }}>zlg design</h3>
+            <h3 className="text-sm font-light tracking-wider mb-4" style={{ color: '#185B30' }}>zlgdesign</h3>
             <p className="text-xs leading-relaxed" style={{ color: '#185B30' }}>
               crafting timeless spaces through innovative and sustainable architecture.
             </p>
@@ -70,7 +70,7 @@ export default function Footer() {
 
         <div className="mt-12 pt-8 border-t text-center" style={{ borderColor: '#185B3033' }}>
           <p className="text-xs" style={{ color: '#185B30' }}>
-            © {new Date().getFullYear()} zlg design. all rights reserved.
+            © {new Date().getFullYear()} zlgdesign. all rights reserved.
           </p>
         </div>
       </div>

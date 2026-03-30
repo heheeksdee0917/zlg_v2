@@ -57,7 +57,7 @@ export const projects: Project[] = [
       },
       {
         type: 'text',
-        content: 'The punctuated façade is similar to all of ZLG Design\'s works and that is not to say that the appeal is lost.In fact, the play of ambience through the incorporation of day lighting with façade treatment is a tried and true timeless aesthetic, as are the impeccable play of materials the architects are known for.' 
+        content: 'The punctuated façade is similar to all of zlgdesign\'s works and that is not to say that the appeal is lost.In fact, the play of ambience through the incorporation of day lighting with façade treatment is a tried and true timeless aesthetic, as are the impeccable play of materials the architects are known for.' 
       },
       {
         type: 'text',
@@ -267,6 +267,11 @@ export const projects: Project[] = [
     heroImage: '/projects/the-stonor/CP.avif',
     images: [
       '/projects/the-stonor/CP.avif',
+      '/projects/the-stonor/A1.avif',
+      '/projects/the-stonor/A2.avif',
+      '/projects/the-stonor/A3.avif',
+      '/projects/the-stonor/A4.avif',
+      '/projects/the-stonor/A5.avif',
     ],
   },
 ];

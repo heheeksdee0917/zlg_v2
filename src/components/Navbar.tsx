@@ -80,7 +80,7 @@ export default function Navbar() {
         <div className="max-w-screen-2xl mx-auto px-8 py-4 md:py-6 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Link to="/" className="flex items-center" onClick={closeMenu}>
-              <img src="/general/logo(zlg_green).png" alt="ZLG Design" className="h-6" />
+              <img src="/general/logo(zlg_green).png" alt="zlgdesign" className="h-6" />
             </Link>
             <span className="text-sm text-[#185B30] lowercase leading-none">zlgdesign</span>
           </div>
@@ -198,7 +198,7 @@ export default function Navbar() {
 
           {/* Logo + wordmark — bottom of panel */}
           <div className="absolute bottom-8 left-20 flex items-center space-x-3">
-            <img src="/logo(black).png" alt="ZLG Design" className="h-6" />
+            <img src="/logo(black).png" alt="zlgdesign" className="h-6" />
             <span className="text-sm text-black lowercase leading-none">zlgdesign</span>
           </div>
         </div>

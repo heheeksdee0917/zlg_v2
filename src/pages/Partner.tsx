@@ -118,38 +118,53 @@ export default function Partners() {
 
       {/* Introduction Section */}
       <section
-        ref={setRef('intro')}
-        data-section="intro"
-        className="bg-white flex flex-col items-start py-8 md:py-16 relative min-h-[100vh]"
-      >
+  ref={setRef('intro')}
+  data-section="intro"
+  className="bg-white flex flex-col items-start py-8 md:py-16 relative min-h-[100vh]"
+>
+  <div
+    className="absolute inset-0 bg-cover bg-center"
+    style={{
+      backgroundImage: 'url(/images/langkawi.avif)',
+      opacity: 0.6
+    }}
+  />
+  <div className={`relative z-10 w-full px-8 pb-8 transition-all duration-1000 ease-out ${
+    visibleSections.intro ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+  }`}>
+    <div className="max-w-screen-2xl mx-auto">
+      <div className="max-w-3xl">
+
+        {/* Glassmorphism wrapper — mobile only */}
         <div
-          className="absolute inset-0 bg-cover bg-center"
+          className="md:contents"
           style={{
-            backgroundImage: 'url(/images/langkawi.avif)',
-            opacity: 0.6
+            background: 'rgba(255, 255, 255, 0.15)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            borderRadius: '24px',
+            padding: '2rem',
           }}
-        />
-        <div className={`relative z-10 w-full px-8 pb-8 transition-all duration-1000 ease-out ${
-          visibleSections.intro ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`}>
-          <div className="max-w-screen-2xl mx-auto">
-            <div className="max-w-3xl">
-              <h2 className="text-3xl font-light mb-8 lowercase text-[#185B30]">Our Partnership Philosophy</h2>
-              <div className="space-y-6">
-                <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-                  zlg partners with a number of universities and design colleges among them the one academy and taylor's university. we believe in continuous research and lairing all practical work sharpened through a deep understanding of ongoing issues such as carbon storage and climate change, and global conservation efforts.
-                </p>
-                <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-                  our partners include individuals who share similar interests, often clients. among them are artists and artisans alike, and furniture makers and retailers such as atmos, bnr, TMOG and GTA interior designers.
-                </p>
-                <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-                  zlg also works closely with researchers and specialists often working together on life long relationships on projects. among them are scientists such as dr daniel cicuzza, dr brandon chee and dr nike baetzner.
-                </p>
-              </div>
-            </div>
+        >
+          <h2 className="text-3xl font-light mb-8 lowercase text-[#185B30]">Our Partnership Philosophy</h2>
+          <div className="space-y-6">
+            <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+              zlg partners with a number of universities and design colleges among them the one academy and taylor's university. we believe in continuous research and lairing all practical work sharpened through a deep understanding of ongoing issues such as carbon storage and climate change, and global conservation efforts.
+            </p>
+            <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+              our partners include individuals who share similar interests, often clients. among them are artists and artisans alike, and furniture makers and retailers such as atmos, bnr, TMOG and GTA interior designers.
+            </p>
+            <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+              zlg also works closely with researchers and specialists often working together on life long relationships on projects. among them are scientists such as dr daniel cicuzza, dr brandon chee and dr nike baetzner.
+            </p>
           </div>
         </div>
-      </section>
+
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Partners Along the Journey & Signature Projects */}
       <section
