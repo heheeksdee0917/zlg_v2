@@ -7,6 +7,59 @@ function HeroSection() {
   const isAnimating = useRef(false);
   const sectionRef = useRef<HTMLDivElement>(null);
 
+  const touchStartY = useRef<number>(0);
+
+  useEffect(() => {
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
+
+    const handleTouchEnd = (e: TouchEvent) => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      if (!inView) return;
+
+      const deltaY = touchStartY.current - e.changedTouches[0].clientY;
+      if (Math.abs(deltaY) < 30) return; // ignore small swipes
+
+      const direction = deltaY > 0 ? 1 : -1;
+      const next = panel + direction;
+
+      if (next < 0 || next > 2) return;
+
+      if (isAnimating.current) return;
+      setPanel(next);
+      isAnimating.current = true;
+      setTimeout(() => { isAnimating.current = false; }, 800);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const section = sectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      if (!inView) return;
+
+      const deltaY = touchStartY.current - e.touches[0].clientY;
+      const next = panel + (deltaY > 0 ? 1 : -1);
+      if (next >= 0 && next <= 2) e.preventDefault(); // prevent page scroll only within panels
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [panel]);
+
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       const section = sectionRef.current;
