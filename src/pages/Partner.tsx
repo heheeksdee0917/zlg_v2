@@ -135,7 +135,7 @@ function HeroSection() {
               className="hidden md:block flex-shrink-0 overflow-hidden"
               style={{ height: '75vh', aspectRatio: '2/3', animation: 'floatPhoto 6s ease-in-out infinite' }}
             >
-              <img src="/images/langkawi.avif" alt="" className="w-full h-full object-cover" loading="lazy" />
+              <img src="/general/zlg_founding.avif" alt="" className="w-full h-full object-cover" loading="lazy" />
             </div>
           </div>
         </div>
@@ -235,7 +235,6 @@ export default function Partners() {
 
               {/* Glassmorphism wrapper */}
               <div
-                className="md:contents"
                 style={{
                   background: 'rgba(255, 255, 255, 0.15)',
                   backdropFilter: 'blur(12px)',

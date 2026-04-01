@@ -132,7 +132,7 @@ function HeroSection() {
               className="hidden md:block flex-shrink-0 overflow-hidden"
               style={{ height: '75vh', aspectRatio: '2/3', animation: 'floatPhoto 6s ease-in-out infinite' }}
             >
-              <img src="/People/team_hero.avif" alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 70%' }} loading="lazy" />
+              <img src="/People/HuatandSusanne.jpeg" alt="" className="w-full h-full object-cover" style={{ objectPosition: 'center 70%' }} loading="lazy" />
             </div>
           </div>
         </div>
