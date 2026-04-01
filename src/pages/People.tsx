@@ -329,7 +329,7 @@ export default function People() {
                 We are always seeking talented architects and designers who share our commitment to excellence, sustainability, and thoughtful design. If you are passionate about creating spaces that matter, we would love to hear from you.
               </p>
               <a
-                href="mailto:info@zlgdesign.com"
+                href="mailto:huatlim@zlgdesign.com"
                 className="inline-block text-base tracking-[0.08em] font-light lowercase text-[#185B30] px-8 py-3 border border-[#185B30]/60 transition-all duration-300"
                 style={{
                   backdropFilter: 'blur(8px)',
