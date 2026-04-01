@@ -6,7 +6,7 @@ export default function Navbar() {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(location.pathname !== '/');
+  const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hoveredColumn, setHoveredColumn] = useState<number | null>(null);
   const [carouselSlide, setCarouselSlide] = useState(0);
@@ -41,7 +41,7 @@ export default function Navbar() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY < 10) { setIsVisible(true); setLastScrollY(currentScrollY); return; }
+      if (currentScrollY < 10) { setLastScrollY(currentScrollY); return; }
       if (currentScrollY > lastScrollY) setIsVisible(false);
       else setIsVisible(true);
       setLastScrollY(currentScrollY);
