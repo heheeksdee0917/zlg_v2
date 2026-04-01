@@ -6,7 +6,7 @@ export default function Navbar() {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(location.pathname !== '/');
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hoveredColumn, setHoveredColumn] = useState<number | null>(null);
   const [carouselSlide, setCarouselSlide] = useState(0);
@@ -20,6 +20,7 @@ export default function Navbar() {
     { title: 'projects', link: '/projects' },
     { title: 'people', link: '/people' },
     { title: 'partners', link: '/partner' },
+    { title: 'contact us', link: '/contact' },
   ];
 
   const carouselImages = [
@@ -72,8 +73,9 @@ export default function Navbar() {
     <>
       {/* ── Navbar Bar ── */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-[500] transition-transform duration-300 ${isVisible && !menuOpen ? 'translate-y-0' : menuOpen ? '-translate-y-full' : '-translate-y-full'
-          }`}
+        className={`fixed top-0 left-0 right-0 z-[500] transition-transform duration-300 ${
+          isVisible && !menuOpen ? 'translate-y-0' : menuOpen ? '-translate-y-full' : '-translate-y-full'
+        }`}
         style={{ background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)' }}
       >
         <div className="max-w-screen-2xl mx-auto px-8 py-3 md:py-5 flex items-center justify-between">
@@ -98,9 +100,8 @@ export default function Navbar() {
             >
               <div className="relative w-5 h-2 flex flex-col justify-between">
                 <span className="block w-full h-[1.5px] bg-white transform transition-all duration-300 origin-center" />
-                <span className="block w-full h-[2.5px] bg-white transform transition-all duration-300 origin-center" />
+                <span className="block w-full h-[1.5px] bg-white transform transition-all duration-300 origin-center" />
               </div>
-              {/* Menu text hidden on mobile */}
               <span className="hidden md:block text-sm text-white lowercase leading-none ml-2">
                 menu
               </span>
@@ -172,7 +173,6 @@ export default function Navbar() {
           className="flex flex-col justify-center px-20 relative flex-shrink-0"
           style={{
             width: '35%',
-            //backgroundColor: '#F5FAF7',
             background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)',
           }}
         >
@@ -222,7 +222,7 @@ export default function Navbar() {
 
       {/* ── MOBILE OVERLAY ── */}
       <div
-        className="md:hidden fixed inset-0 z-[499] transition-opacity duration-500 ease-in-out"
+        className="md:hidden fixed inset-0 z-[499] transition-opacity duration-500 ease-in-out flex flex-col"
         style={{
           background: 'linear-gradient(to right, #336138 0%, #5a9d63 100%)',
           opacity: menuOpen ? 1 : 0,
@@ -240,7 +240,8 @@ export default function Navbar() {
           </svg>
         </button>
 
-        <div className="flex flex-col items-start justify-center h-full space-y-6 px-10">
+        {/* Nav links — vertically centered, flex-1 pushes logo to bottom */}
+        <div className="flex flex-col items-start justify-center flex-1 space-y-6 px-10">
           {navItems.map((item, index) => {
             const active = isActive(item.link);
             return (
@@ -257,7 +258,7 @@ export default function Navbar() {
                   className="text-3xl lowercase transition-all duration-300"
                   style={{
                     fontWeight: active ? 700 : 300,
-                    color: active ? '#FFFFFF' : '#FFFFFF',
+                    color: '#FFFFFF',
                   }}
                 >
                   {item.title}
@@ -265,6 +266,12 @@ export default function Navbar() {
               </Link>
             );
           })}
+        </div>
+
+        {/* Logo + wordmark — bottom */}
+        <div className="px-10 pb-10 flex items-center space-x-3">
+          <img src="/general/logo(white).png" alt="zlgdesign" className="h-6" />
+          <span className="text-sm text-white lowercase leading-none">zlgdesign</span>
         </div>
       </div>
     </>

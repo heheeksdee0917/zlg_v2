@@ -12,10 +12,10 @@ export default function Projects() {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-[#F5FAF7] pt-28 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`min-h-screen bg-[#F5FAF7] pt-14 transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
       <section className="max-w-screen-2xl mx-auto px-8 py-8">
         <div className="mb-8 text-left">
-          <h1 className="text-base text-[#185B30] font-normal mb-4 lowercase">projects</h1>
+          <h1 className="text-2xl text-[#185B30] font-normal mb-4 lowercase">projects</h1>
           <p className="text-base text-[#185B30] lowercase text-left">
             our portfolio represents a diverse range of architectural typologies, from intimate residences to large-scale urban interventions. each project is a unique response to site, program, and client aspirations.
           </p>

@@ -8,12 +8,9 @@ import { useLightbox } from '../hooks/useLightbox';
 import { useTouchGestures } from '../hooks/useTouchGestures';
 import { useScrollActiveImage } from '../hooks/useScrollActiveImage';
 
-// ─── Bottom Sheet snap points (as % of viewport height from top) ───
 const PEEK_Y = 92;
 const OPEN_Y = 12;
 const DRAG_THRESHOLD = 60;
-
-
 
 export default function ProjectDetails() {
 
@@ -36,10 +33,15 @@ export default function ProjectDetails() {
   const desktopScrollContainerRef = useRef<HTMLDivElement>(null);
   const lightboxImageRef = useRef<HTMLDivElement>(null);
 
-  const relatedProjects = useMemo(
-    () => (project ? projects.filter((p) => p.id !== project.id).slice(0, 3) : []),
-    [project]
-  );
+  const relatedProjects = useMemo(() => {
+    if (!project) return [];
+    const others = projects.filter((p) => p.id !== project.id);
+    for (let i = others.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [others[i], others[j]] = [others[j], others[i]];
+    }
+    return others.slice(0, 3);
+  }, [project]);
 
   const lightboxHook = useLightbox(project?.images || [], { enabled: true });
   const { isOpen: lightboxOpen, currentIndex: currentImageIndex, openLightbox, closeLightbox, goToNext, goToPrevious } = lightboxHook;
@@ -58,19 +60,47 @@ export default function ProjectDetails() {
     enabled: lightboxOpen,
   });
 
+  // Scroll-to-bottom triggers sheet open on mobile
   useEffect(() => {
-    window.scrollTo(0, 0);
-    mobileScrollContainerRef.current?.scrollTo({ top: 0 });  // ← add this
-    desktopScrollContainerRef.current?.scrollTo({ top: 0 }); // ← and this
+    const container = mobileScrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
+      if (distanceFromBottom < 50 && sheetSnap === 'peek') {
+        setSheetSnap('open');
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [sheetSnap]);
+
+  // Reset all state on slug change — scroll reset deferred so refs are mounted
+  useEffect(() => {
     setSheetSnap('peek');
     setDragY(null);
     setZoom(1);
     setFadeIn(false);
     setVisibleSections({});
-    const timer = setTimeout(() => setFadeIn(true), 50);
+
+    const timer = setTimeout(() => {
+      mobileScrollContainerRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+      desktopScrollContainerRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+      setFadeIn(true);
+    }, 50);
+
     return () => clearTimeout(timer);
   }, [slug]);
 
+  useEffect(() => {
+    if (sheetSnap === 'open') {
+      sheetInnerRef.current?.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [sheetSnap]);
+
+  // Intersection observer for section reveal animations
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -147,7 +177,6 @@ export default function ProjectDetails() {
   const detailContent = project.detailContent || [];
   const hasContent = detailContent.length > 0;
 
-  // Height of the peek strip so gallery content scrolls clear of it
   const peekStripHeight = (100 - PEEK_Y) / 100 * window.innerHeight;
 
   return (
@@ -176,7 +205,7 @@ export default function ProjectDetails() {
                   />
                 </div>
               ))}
-              {/* Spacer — exactly the peek strip height so last image isn't hidden behind sheet */}
+              {/* Spacer so last image isn't hidden behind sheet */}
               <div style={{ height: `${peekStripHeight}px` }} />
             </div>
           </div>
@@ -190,11 +219,6 @@ export default function ProjectDetails() {
                   }`}
               />
             ))}
-          </div>
-
-          {/* Image counter */}
-          <div className="absolute top-20 right-5 z-10 text-black/40 text-xs tracking-widest pointer-events-none">
-            {String(activeImageIndex + 1).padStart(2, '0')} / {String(project.images.length).padStart(2, '0')}
           </div>
         </div>
 
@@ -210,36 +234,33 @@ export default function ProjectDetails() {
         >
           <div className="bg-[#F5FAF7] rounded-t-2xl h-full flex flex-col shadow-[0_-8px_40px_rgba(0,0,0,0.12)]">
 
-            {/* Drag handle */}
+            {/* Drag handle pill only — no content here */}
             <div
-              className="flex-shrink-0 px-6 pt-3 pb-4 cursor-grab active:cursor-grabbing"
+              className="flex-shrink-0 px-6 pt-3 pb-2 cursor-grab active:cursor-grabbing"
               onTouchStart={onTouchStart}
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
-              onClick={() => {
-                const next = sheetSnap === 'peek' ? 'open' : 'peek';
-                setSheetSnap(next);
-                if (next === 'peek') {
-                  mobileScrollContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-              }}
+              onClick={() => setSheetSnap(sheetSnap === 'peek' ? 'open' : 'peek')}
             >
-              <div className="w-10 h-[3px] rounded-full bg-black/20 mx-auto mb-4" />
-              <div className="flex items-baseline justify-between">
-                <h1 className="text-base font-semibold text-[#185B30] lowercase leading-tight">{project.title}</h1>
-                <span className="text-xs text-[#185B30]/70 lowercase tracking-wide">{project.year}</span>
-              </div>
-              <p className="text-xs text-[#185B30]/70 lowercase mt-0.5">{project.location}</p>
+              <div className="w-10 h-[3px] rounded-full bg-black/20 mx-auto" />
             </div>
 
-            {/* Scrollable content */}
+            {/* Single scrollable container — title + content + footer all together */}
             <div
               ref={sheetInnerRef}
               className="flex-1 overflow-y-auto overscroll-contain"
               onTouchStart={(e) => { if (sheetSnap === 'open') e.stopPropagation(); }}
             >
-              <div className="px-6">
+              <div className="px-6 pt-2 pb-4">
+                {/* Title / year / location — now inside scroll */}
+                <div className="flex items-baseline justify-between mb-1">
+                  <h1 className="text-base font-semibold text-[#185B30] lowercase leading-tight">{project.title}</h1>
+                  <span className="text-xs text-[#185B30]/70 lowercase tracking-wide">{project.year}</span>
+                </div>
+                <p className="text-xs text-[#185B30]/70 lowercase mt-0.5 mb-4">{project.location}</p>
+
                 <div className="border-t border-black/10 mb-4" />
+
                 {hasContent && (
                   <div className="mb-4">
                     {detailContent.map((block, index) => (
@@ -283,14 +304,14 @@ export default function ProjectDetails() {
                 </section>
               </div>
 
-              {/* Full Footer */}
+              {/* Footer */}
               <Footer />
             </div>
           </div>
         </div>
       </div>
 
-      {/* ════════ DESKTOP — unchanged ════════ */}
+      {/* ════════ DESKTOP ════════ */}
       <section className="hidden md:flex gap-0 min-h-screen">
         <div className="w-[60%] h-screen relative">
           <div className="absolute left-8 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-3 pointer-events-none">
@@ -303,23 +324,23 @@ export default function ProjectDetails() {
             ))}
           </div>
           <div className="w-full h-full overflow-y-auto" ref={desktopScrollContainerRef}>
-              {project.images.map((image, index) => (
-                <div
-                  key={index}
-                  ref={setDesktopImageRef(index)}
-                  data-image-index={index}
-                  className="w-full cursor-pointer mb-[5px]"
-                  onClick={() => openLightbox(index)}
-                >
-                  <img
-                    src={image}
-                    alt={`${project.title} - Image ${index + 1}`}
-                    className="w-full h-auto object-cover"
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                  />
-                </div>
-              ))}
-            </div>
+            {project.images.map((image, index) => (
+              <div
+                key={index}
+                ref={setDesktopImageRef(index)}
+                data-image-index={index}
+                className="w-full cursor-pointer mb-[5px]"
+                onClick={() => openLightbox(index)}
+              >
+                <img
+                  src={image}
+                  alt={`${project.title} - Image ${index + 1}`}
+                  className="w-full h-auto object-cover"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="w-[40%] bg-[#F5FAF7] sticky top-20 h-screen overflow-y-auto custom-scrollbar pt-20">
@@ -342,6 +363,7 @@ export default function ProjectDetails() {
         </div>
       </section>
 
+      {/* Desktop related projects */}
       <section ref={setRef('related-desktop')} data-section="related-desktop" className="hidden md:block bg-[#F5FAF7] py-16">
         <div className="max-w-screen-2xl mx-auto px-8">
           <h2 className={`text-base font-medium tracking-wider mb-8 text-[#185B30] transition-all duration-1000 ease-out ${visibleSections['related-desktop'] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
@@ -370,18 +392,32 @@ export default function ProjectDetails() {
 
       {/* Lightbox */}
       {lightboxOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center" ref={lightboxImageRef} {...lightboxGestures}>
-          <button onClick={closeLightbox} className="absolute top-4 right-4 text-white hover:text-[#185B30] transition-colors z-10"><X size={32} /></button>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center"
+          ref={lightboxImageRef}
+          {...lightboxGestures}
+        >
+          <button onClick={closeLightbox} className="absolute top-4 right-4 text-white hover:text-[#185B30] transition-colors z-10">
+            <X size={32} />
+          </button>
           <div className="absolute top-4 left-1/2 -translate-x-1/2 flex space-x-4 z-10">
-            <button onClick={handleZoomOut} disabled={zoom <= 1} className="text-white hover:text-[#185B30] transition-colors disabled:opacity-30"><ZoomOut size={24} /></button>
+            <button onClick={handleZoomOut} disabled={zoom <= 1} className="text-white hover:text-[#185B30] transition-colors disabled:opacity-30">
+              <ZoomOut size={24} />
+            </button>
             <span className="text-white font-light text-base">{Math.round(zoom * 100)}%</span>
-            <button onClick={handleZoomIn} disabled={zoom >= 3} className="text-white hover:text-[#185B30] transition-colors disabled:opacity-30"><ZoomIn size={24} /></button>
+            <button onClick={handleZoomIn} disabled={zoom >= 3} className="text-white hover:text-[#185B30] transition-colors disabled:opacity-30">
+              <ZoomIn size={24} />
+            </button>
           </div>
           {currentImageIndex > 0 && (
-            <button onClick={goToPrevious} className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-[#185B30] z-10 bg-black/50 rounded-full p-2"><ChevronLeft size={32} /></button>
+            <button onClick={goToPrevious} className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-[#185B30] z-10 bg-black/50 rounded-full p-2">
+              <ChevronLeft size={32} />
+            </button>
           )}
           {currentImageIndex < project.images.length - 1 && (
-            <button onClick={goToNext} className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-[#185B30] z-10 bg-black/50 rounded-full p-2"><ChevronRight size={32} /></button>
+            <button onClick={goToNext} className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-[#185B30] z-10 bg-black/50 rounded-full p-2">
+              <ChevronRight size={32} />
+            </button>
           )}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white font-light text-base z-10">
             {currentImageIndex + 1} / {project.images.length}

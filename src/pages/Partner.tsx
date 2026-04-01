@@ -2,28 +2,94 @@ import React, { useState, useEffect, useRef } from 'react';
 import { keyPartners, journeyPartners, signatureProjects } from '../data/partner';
 
 function HeroSection() {
-  const [scrollY, setScrollY] = useState(0);
+  const [panel, setPanel] = useState(0);
+  const isAnimating = useRef(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const touchStartY = useRef<number>(0);
 
+  // Touch support
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+    };
 
-  const heroOpacity = Math.max(0, 1 - scrollY / 200);
-  const imageBlur = Math.min(10, (scrollY - 100) / 30);
-  const overlayOpacity = Math.min(1, (scrollY - 100) / 300);
-  const overlayTranslateY = Math.max(0, 40 - (scrollY - 100) / 10);
+    const handleTouchEnd = (e: TouchEvent) => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      if (!inView) return;
+
+      const deltaY = touchStartY.current - e.changedTouches[0].clientY;
+      if (Math.abs(deltaY) < 30) return;
+
+      const direction = deltaY > 0 ? 1 : -1;
+      const next = panel + direction;
+      if (next < 0 || next > 1) return;
+      if (isAnimating.current) return;
+
+      setPanel(next);
+      isAnimating.current = true;
+      setTimeout(() => { isAnimating.current = false; }, 800);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      if (!inView) return;
+
+      const deltaY = touchStartY.current - e.touches[0].clientY;
+      const next = panel + (deltaY > 0 ? 1 : -1);
+      if (next >= 0 && next <= 1) e.preventDefault();
+    };
+
+    window.addEventListener('touchstart', handleTouchStart, { passive: true });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
+  }, [panel]);
+
+  // Wheel support
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const rect = section.getBoundingClientRect();
+      const inView = rect.top <= 0 && rect.bottom >= window.innerHeight;
+      if (!inView) return;
+
+      const direction = e.deltaY > 0 ? 1 : -1;
+      const next = panel + direction;
+      if (next < 0 || next > 1) return;
+
+      e.preventDefault();
+      if (isAnimating.current) return;
+
+      setPanel(next);
+      isAnimating.current = true;
+      setTimeout(() => { isAnimating.current = false; }, 800);
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, [panel]);
 
   return (
-    <section className="relative h-[150vh] md:h-[200vh]">
+    <section ref={sectionRef} className="relative h-[150vh]">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
+        {/* Video background */}
         <video
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover transition-all duration-700"
           style={{
-            filter: `blur(${Math.max(0, imageBlur)}px)`,
-            transform: 'scale(1.1)',
+            filter: panel > 0 ? 'blur(8px)' : 'blur(0px)',
+            transform: 'scale(1.05)',
           }}
           poster="/v2_thumbnail.avif"
           autoPlay
@@ -34,11 +100,16 @@ function HeroSection() {
           <source src="/general/zlg_v4_upscaled.mp4" type="video/mp4" />
         </video>
 
-        <div className="absolute inset-0 bg-black/40" />
-
+        {/* Overlay darkens on panel 1 */}
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center text-center px-8"
-          style={{ opacity: heroOpacity, transition: 'none' }}
+          className="absolute inset-0 bg-black transition-opacity duration-700"
+          style={{ opacity: panel > 0 ? 0.55 : 0.4 }}
+        />
+
+        {/* Panel 0 — Title */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 transition-opacity duration-700"
+          style={{ opacity: panel === 0 ? 1 : 0, pointerEvents: panel === 0 ? 'auto' : 'none' }}
         >
           <p className="text-xs tracking-[0.3em] lowercase font-light text-white/60 mb-4">
             our network
@@ -48,23 +119,50 @@ function HeroSection() {
           </h1>
         </div>
 
+        {/* Panel 1 — Content */}
         <div
-          className="absolute inset-0 flex items-center px-8 max-w-screen-2xl mx-auto"
-          style={{
-            opacity: overlayOpacity,
-            transform: `translateY(${overlayTranslateY}px)`,
-            transition: 'none',
-          }}
+          className="absolute inset-0 flex items-center transition-opacity duration-700"
+          style={{ opacity: panel === 1 ? 1 : 0, pointerEvents: panel === 1 ? 'auto' : 'none' }}
         >
-          <div className="max-w-xl">
-            <h2 className="text-base font-normal mb-4 lowercase underline text-white">Key Partners</h2>
-            <p className="text-base text-white/90 leading-relaxed lowercase text-left">
-              Our partners are built on decades of collaboration with exceptional architects and designers who have shaped the built environment across continents. Together, we bring world-class expertise and a shared vision of design excellence.
-            </p>
+          <div className="w-full flex items-center justify-between px-8 md:px-16 max-w-screen-2xl mx-auto">
+            <div className="max-w-2xl">
+              <h2 className="text-base font-normal mb-4 lowercase underline text-white">Key Partners</h2>
+              <p className="text-base text-white/90 leading-relaxed lowercase text-left">
+                Our partners are built on decades of collaboration with exceptional architects and designers who have shaped the built environment across continents. Together, we bring world-class expertise and a shared vision of design excellence.
+              </p>
+            </div>
+            <div
+              className="hidden md:block flex-shrink-0 overflow-hidden"
+              style={{ height: '75vh', aspectRatio: '2/3', animation: 'floatPhoto 6s ease-in-out infinite' }}
+            >
+              <img src="/images/langkawi.avif" alt="" className="w-full h-full object-cover" loading="lazy" />
+            </div>
           </div>
         </div>
 
+        {/* Dots */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3">
+          {[0, 1].map((i) => (
+            <button
+              key={i}
+              onClick={() => setPanel(i)}
+              className="h-px transition-all duration-500"
+              style={{
+                width: i === panel ? '2rem' : '1rem',
+                backgroundColor: i === panel ? '#ffffff' : '#ffffff66',
+              }}
+            />
+          ))}
+        </div>
       </div>
+
+      <style>{`
+        @keyframes floatPhoto {
+          0%   { transform: translateY(0px); }
+          50%  { transform: translateY(-12px); }
+          100% { transform: translateY(0px); }
+        }
+      `}</style>
     </section>
   );
 }
@@ -118,53 +216,53 @@ export default function Partners() {
 
       {/* Introduction Section */}
       <section
-  ref={setRef('intro')}
-  data-section="intro"
-  className="bg-white flex flex-col items-start py-8 md:py-16 relative min-h-[100vh]"
->
-  <div
-    className="absolute inset-0 bg-cover bg-center"
-    style={{
-      backgroundImage: 'url(/images/langkawi.avif)',
-      opacity: 0.6
-    }}
-  />
-  <div className={`relative z-10 w-full px-8 pb-8 transition-all duration-1000 ease-out ${
-    visibleSections.intro ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-  }`}>
-    <div className="max-w-screen-2xl mx-auto">
-      <div className="max-w-3xl">
-
-        {/* Glassmorphism wrapper — mobile only */}
+        ref={setRef('intro')}
+        data-section="intro"
+        className="bg-white flex flex-col items-start py-8 md:py-16 relative min-h-[100vh]"
+      >
         <div
-          className="md:contents"
+          className="absolute inset-0 bg-cover bg-center"
           style={{
-            background: 'rgba(255, 255, 255, 0.15)',
-            backdropFilter: 'blur(12px)',
-            WebkitBackdropFilter: 'blur(12px)',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            borderRadius: '24px',
-            padding: '2rem',
+            backgroundImage: 'url(/images/langkawi.avif)',
+            opacity: 0.6
           }}
-        >
-          <h2 className="text-3xl font-light mb-8 lowercase text-[#185B30]">Our Partnership Philosophy</h2>
-          <div className="space-y-6">
-            <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-              zlg partners with a number of universities and design colleges among them the one academy and taylor's university. we believe in continuous research and lairing all practical work sharpened through a deep understanding of ongoing issues such as carbon storage and climate change, and global conservation efforts.
-            </p>
-            <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-              our partners include individuals who share similar interests, often clients. among them are artists and artisans alike, and furniture makers and retailers such as atmos, bnr, TMOG and GTA interior designers.
-            </p>
-            <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-              zlg also works closely with researchers and specialists often working together on life long relationships on projects. among them are scientists such as dr daniel cicuzza, dr brandon chee and dr nike baetzner.
-            </p>
+        />
+        <div className={`relative z-10 w-full px-8 pb-8 transition-all duration-1000 ease-out ${
+          visibleSections.intro ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+        }`}>
+          <div className="max-w-screen-2xl mx-auto">
+            <div className="max-w-3xl">
+
+              {/* Glassmorphism wrapper */}
+              <div
+                className="md:contents"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.15)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: '24px',
+                  padding: '2rem',
+                }}
+              >
+                <h2 className="text-3xl font-light mb-8 lowercase text-[#185B30]">Our Partnership Philosophy</h2>
+                <div className="space-y-6">
+                  <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+                    zlg partners with a number of universities and design colleges among them the one academy and taylor's university. we believe in continuous research and lairing all practical work sharpened through a deep understanding of ongoing issues such as carbon storage and climate change, and global conservation efforts.
+                  </p>
+                  <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+                    our partners include individuals who share similar interests, often clients. among them are artists and artisans alike, and furniture makers and retailers such as atmos, bnr, TMOG and GTA interior designers.
+                  </p>
+                  <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+                    zlg also works closely with researchers and specialists often working together on life long relationships on projects. among them are scientists such as dr daniel cicuzza, dr brandon chee and dr nike baetzner.
+                  </p>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
-
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Partners Along the Journey & Signature Projects */}
       <section
@@ -221,7 +319,6 @@ export default function Partners() {
           </div>
         </div>
       </section>
-
 
     </div>
   );
