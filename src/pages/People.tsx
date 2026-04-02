@@ -108,7 +108,7 @@ function HeroSection() {
           className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 transition-opacity duration-700"
           style={{ opacity: panel === 0 ? 1 : 0, pointerEvents: panel === 0 ? 'auto' : 'none' }}
         >
-          <p className="text-xs tracking-[0.3em] lowercase font-light text-white/60 mb-4">
+          <p className="text-xs tracking-[0.2em] lowercase font-light text-white/60 mb-1">
             zlgdesign
           </p>
           <h1 className="text-4xl md:text-5xl font-extralight lowercase text-white">
@@ -123,7 +123,7 @@ function HeroSection() {
         >
           <div className="w-full flex items-center justify-between px-8 md:px-16 max-w-screen-2xl mx-auto">
             <div className="max-w-2xl">
-              <h2 className="text-base font-normal mb-4 lowercase underline text-white">Our Team</h2>
+              <h2 className="text-base font-normal mb-1 lowercase underline text-white">Our Team</h2>
               <p className="text-base text-white/90 leading-relaxed lowercase text-left">
                 zlgdesign is a collective of architects, designers, and thinkers united by a shared passion for creating meaningful spaces. Our diverse backgrounds and expertise enable us to approach each project with fresh perspectives and rigorous craft.
               </p>

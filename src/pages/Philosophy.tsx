@@ -47,6 +47,7 @@ function HeroSection() {
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
+
           style={{
             backgroundImage: `url('/general/Philosophy.avif')`,
             backgroundPosition: 'center',
@@ -55,6 +56,8 @@ function HeroSection() {
             transition: 'filter 0.8s ease',
           }}
         />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/40" />
 
         {/* Dark overlay — kicks in after step 1 */}
         <div
@@ -70,7 +73,7 @@ function HeroSection() {
           className="absolute inset-0 flex flex-col items-center justify-center text-center px-8 transition-opacity duration-500"
           style={{ opacity: snapIndex === 0 ? 1 : 0 }}
         >
-          <p className="text-xs tracking-[0.3em] lowercase font-light text-white/60 mb-4">our thinking</p>
+          <p className="text-xs tracking-[0.2em] lowercase font-light text-white/60 mb-1">our thinking</p>
           <h1 className="text-4xl md:text-5xl font-extralight lowercase text-white">philosophy</h1>
         </div>
 

@@ -91,10 +91,10 @@ export default function Home() {
           ))}
 
           {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/25 z-10" />
+          <div className="absolute inset-0 bg-black/15 z-10" />
 
           {/* Text — bottom, center-aligned */}
-          <div className="absolute z-20 bottom-16 left-0 right-0 flex flex-col items-center text-white text-center px-8">
+          <div className="absolute z-20 bottom-24 left-0 right-0 flex flex-col items-center text-white text-center px-8">
           <p
               className="fade-up text-xs tracking-[0.1em] lowercase font-light mb-2 opacity-60"
               style={{ animationDelay: '0.2s' }}

@@ -8,7 +8,7 @@ import { useLightbox } from '../hooks/useLightbox';
 import { useTouchGestures } from '../hooks/useTouchGestures';
 import { useScrollActiveImage } from '../hooks/useScrollActiveImage';
 
-const PEEK_Y = 92;
+const PEEK_Y = 85;
 const OPEN_Y = 12;
 const DRAG_THRESHOLD = 60;
 
