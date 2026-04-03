@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { keyPartners, journeyPartners, signatureProjects } from '../data/partner';
+import SEO from '../components/seo'
 
 function HeroSection() {
   const [panel, setPanel] = useState(0);
@@ -7,6 +8,13 @@ function HeroSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const touchStartY = useRef<number>(0);
 
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Our Partners | ZLG Design – Collaborative Architecture in KL",
+    "description": "ZLG Design collaborates with trusted engineering, construction, and specialist partners to deliver exceptional architectural projects with the highest standards of quality.",
+    "url": "https://zlgdesign.com/partners"
+  };
   // Touch support
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
@@ -210,115 +218,123 @@ export default function Partners() {
   };
 
   return (
-    <div className={`transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+    <>
+      <SEO
+        title="Our Partners | ZLG Design – Collaborative Architecture in KL"
+        description="ZLG Design works with trusted engineering, construction, and specialist partners across Malaysia to deliver exceptional architectural projects with the highest standards of quality and craftsmanship."
+        canonical="https://zlgdesign.com/partners"
+        schema={schema}
+      />
+      <main>
+        <h1>About Us</h1>
+        <div className={`transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
 
-      <HeroSection />
+          <HeroSection />
 
-      {/* Introduction Section */}
-      <section
-        ref={setRef('intro')}
-        data-section="intro"
-        className="bg-white flex flex-col items-start py-8 md:py-16 relative min-h-[100vh]"
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: 'url(/images/langkawi.avif)',
-            opacity: 0.6
-          }}
-        />
-        <div className={`relative z-10 w-full px-8 pb-8 transition-all duration-1000 ease-out ${
-          visibleSections.intro ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-        }`}>
-          <div className="max-w-screen-2xl mx-auto">
-            <div className="max-w-3xl">
+          {/* Introduction Section */}
+          <section
+            ref={setRef('intro')}
+            data-section="intro"
+            className="bg-white flex flex-col items-start py-8 md:py-16 relative min-h-[100vh]"
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{
+                backgroundImage: 'url(/images/langkawi.avif)',
+                opacity: 0.6
+              }}
+            />
+            <div className={`relative z-10 w-full px-8 pb-8 transition-all duration-1000 ease-out ${visibleSections.intro ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              }`}>
+              <div className="max-w-screen-2xl mx-auto">
+                <div className="max-w-3xl">
 
-              {/* Glassmorphism wrapper */}
-              <div
-                style={{
-                  background: 'rgba(255, 255, 255, 0.15)',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  borderRadius: '24px',
-                  padding: '2rem',
-                }}
-              >
-                <h2 className="text-3xl font-light mb-8 lowercase text-[#185B30]">Our Partnership Philosophy</h2>
-                <div className="space-y-6">
-                  <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-                    zlg partners with a number of universities and design colleges among them the one academy and taylor's university. we believe in continuous research and lairing all practical work sharpened through a deep understanding of ongoing issues such as carbon storage and climate change, and global conservation efforts.
-                  </p>
-                  <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-                    our partners include individuals who share similar interests, often clients. among them are artists and artisans alike, and furniture makers and retailers such as atmos, bnr, TMOG and GTA interior designers.
-                  </p>
-                  <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
-                    zlg also works closely with researchers and specialists often working together on life long relationships on projects. among them are scientists such as dr daniel cicuzza, dr brandon chee and dr nike baetzner.
-                  </p>
+                  {/* Glassmorphism wrapper */}
+                  <div
+                    style={{
+                      background: 'rgba(255, 255, 255, 0.15)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      border: '1px solid rgba(255, 255, 255, 0.2)',
+                      borderRadius: '24px',
+                      padding: '2rem',
+                    }}
+                  >
+                    <h2 className="text-3xl font-light mb-8 lowercase text-[#185B30]">Our Partnership Philosophy</h2>
+                    <div className="space-y-6">
+                      <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+                        zlg partners with a number of universities and design colleges among them the one academy and taylor's university. we believe in continuous research and lairing all practical work sharpened through a deep understanding of ongoing issues such as carbon storage and climate change, and global conservation efforts.
+                      </p>
+                      <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+                        our partners include individuals who share similar interests, often clients. among them are artists and artisans alike, and furniture makers and retailers such as atmos, bnr, TMOG and GTA interior designers.
+                      </p>
+                      <p className="text-base text-[#185B30] leading-relaxed font-light lowercase text-left">
+                        zlg also works closely with researchers and specialists often working together on life long relationships on projects. among them are scientists such as dr daniel cicuzza, dr brandon chee and dr nike baetzner.
+                      </p>
+                    </div>
+                  </div>
+
                 </div>
               </div>
-
             </div>
-          </div>
-        </div>
-      </section>
+          </section>
 
-      {/* Partners Along the Journey & Signature Projects */}
-      <section
-        ref={setRef('projects')}
-        data-section="projects"
-        className="bg-[#F5FAF7] py-16"
-      >
-        <div className="max-w-screen-2xl mx-auto px-8 w-full">
-          <div className={`transition-all duration-1000 ease-out ${
-            visibleSections.projects ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-          }`}>
+          {/* Partners Along the Journey & Signature Projects */}
+          <section
+            ref={setRef('projects')}
+            data-section="projects"
+            className="bg-[#F5FAF7] py-16"
+          >
+            <div className="max-w-screen-2xl mx-auto px-8 w-full">
+              <div className={`transition-all duration-1000 ease-out ${visibleSections.projects ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                }`}>
 
-            <div className="mb-16">
-              <h4 className="text-[#185B30] font-normal mb-8 lowercase">partners along the journey</h4>
+                <div className="mb-16">
+                  <h4 className="text-[#185B30] font-normal mb-8 lowercase">partners along the journey</h4>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
-                {partnersWithImages.map((partner, index) => (
-                  <div
-                    key={partner.name}
-                    className="transition-all duration-1000 ease-out"
-                    style={{ transitionDelay: `${index * 100}ms` }}
-                  >
-                    <div className="w-full aspect-[2/3] bg-gray-100 overflow-hidden mb-4">
-                      <img
-                        src={partner.image}
-                        alt={partner.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h5 className="text-[#185B30] font-normal mb-1 lowercase">{partner.name}</h5>
-                    {partner.title && (
-                      <p className="text-sm text-[#185B30] font-light lowercase">{partner.title}</p>
-                    )}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                    {partnersWithImages.map((partner, index) => (
+                      <div
+                        key={partner.name}
+                        className="transition-all duration-1000 ease-out"
+                        style={{ transitionDelay: `${index * 100}ms` }}
+                      >
+                        <div className="w-full aspect-[2/3] bg-gray-100 overflow-hidden mb-4">
+                          <img
+                            src={partner.image}
+                            alt={partner.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <h5 className="text-[#185B30] font-normal mb-1 lowercase">{partner.name}</h5>
+                        {partner.title && (
+                          <p className="text-sm text-[#185B30] font-light lowercase">{partner.title}</p>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
-                {partnersTextOnly.map((partner) => (
-                  <div
-                    key={partner.name}
-                    className="flex items-start text-[#185B30] font-light lowercase"
-                  >
-                    <span className="mr-3 text-[#185B30]">•</span>
-                    <span>{partner.name}{partner.title && `: ${partner.title}`}</span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
+                    {partnersTextOnly.map((partner) => (
+                      <div
+                        key={partner.name}
+                        className="flex items-start text-[#185B30] font-light lowercase"
+                      >
+                        <span className="mr-3 text-[#185B30]">•</span>
+                        <span>{partner.name}{partner.title && `: ${partner.title}`}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+
+                <p className="text-[#185B30] leading-relaxed font-light lowercase text-left mt-12">
+                  With over 22 years of experience working on very large and complex buildings across Europe and Asia, our partners bring unparalleled expertise in architectural design, interior design, and project delivery.
+                </p>
               </div>
             </div>
-
-            <p className="text-[#185B30] leading-relaxed font-light lowercase text-left mt-12">
-              With over 22 years of experience working on very large and complex buildings across Europe and Asia, our partners bring unparalleled expertise in architectural design, interior design, and project delivery.
-            </p>
-          </div>
+          </section>
         </div>
-      </section>
-
-    </div>
+      </main>
+    </>
   );
 }

@@ -2,12 +2,22 @@ import React, { useState, useEffect, useRef } from 'react';
 import { keyPartners, team } from '../data/partner';
 import type { Team } from '../data/partner';
 import LazyLoading from '../components/LazyLoading';
+import { SEO } from '../components/seo';
 
 function HeroSection() {
   const [panel, setPanel] = useState(0);
   const isAnimating = useRef(false);
   const sectionRef = useRef<HTMLDivElement>(null);
   const touchStartY = useRef<number>(0);
+
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Our Team | ZLG Design – Architects & Designers in Kuala Lumpur",
+    "description": "Meet the talented architects and designers behind ZLG Design in Kuala Lumpur. Our team brings creativity, technical expertise, and passion to every project.",
+    "url": "https://zlgdesign.com/people"
+  };
 
   // Touch support
   useEffect(() => {
@@ -83,6 +93,7 @@ function HeroSection() {
   }, [panel]);
 
   return (
+
     <section ref={sectionRef} className="relative h-[150vh]">
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
@@ -206,144 +217,151 @@ export default function People() {
   };
 
   return (
-    <div className={`transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+    <>
+      <SEO
+        title="Our People | ZLG Design – Best Architect team in Kuala Lumpur"
+        description="Meet the talented team behind ZLG Design, one of Kuala Lumpur’s leading architectural firms. Our architects and designers bring creativity, expertise, and passion to every project."
+        canonical="https://zlgdesign.com/people"
+        schema={schema}
+      />
+      <main>
+        <h1>zlgdesign team | best architect team in Kuala Lumpur(KL), Malaysia</h1>
+        <div className={`transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
 
-      <HeroSection />
+          <HeroSection />
 
-      <div className="bg-[#F5FAF7] w-full">
-        <section
-          ref={setRef('intro')}
-          data-section="intro"
-          className="max-w-screen-2xl mx-auto px-8 pb-16"
-        >
+          <div className="bg-[#F5FAF7] w-full">
+            <section
+              ref={setRef('intro')}
+              data-section="intro"
+              className="max-w-screen-2xl mx-auto px-8 pb-16"
+            >
 
-          {/* Key Partners Section */}
-          {keyPartners.map((partner, index) => (
-            <React.Fragment key={partner.name}>
-              <section
-                ref={setRef(`partner-${index}`)}
-                data-section={`partner-${index}`}
-                className="flex items-center py-4 md:py-8"
-              >
-                <div className={`grid ${
-                  index % 2 === 0
-                    ? 'md:grid-cols-[30%_70%]'
-                    : 'md:grid-cols-[70%_30%]'
-                } gap-6 lg:gap-10 items-center w-full transition-all duration-1000 ease-out ${
-                  visibleSections[`partner-${index}`] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                }`}>
-                  {index % 2 === 0 ? (
-                    <>
-                      <div className="w-full overflow-hidden">
-                        <img
-                          src={partner.image}
-                          alt={partner.name}
-                          className="w-full aspect-[2/3] object-cover object-center"
-                        />
-                      </div>
-                      <div className="flex flex-col justify-center">
-                        <h3 className="text-base font-normal text-[#185B30] lowercase">{partner.name}</h3>
-                        <p className="text-base text-[#185B30] mb-8 font-light lowercase">{partner.role}</p>
-                        <div className="space-y-6 text-[#185B30] leading-relaxed font-light lowercase text-left">
-                          {partner.bio.map((paragraph, i) => (
-                            <p key={i} className="text-base">{paragraph}</p>
-                          ))}
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex flex-col justify-center order-2 md:order-1">
-                        <h3 className="text-base font-normal text-[#185B30] lowercase">{partner.name}</h3>
-                        <p className="text-base text-[#185B30] mb-8 font-light lowercase">{partner.role}</p>
-                        <div className="space-y-6 text-[#185B30] leading-relaxed font-light lowercase text-left">
-                          {partner.bio.map((paragraph, i) => (
-                            <p key={i} className="text-base">{paragraph}</p>
-                          ))}
-                        </div>
-                      </div>
-                      <div className="w-full overflow-hidden order-1 md:order-2">
-                        <img
-                          src={partner.image}
-                          alt={partner.name}
-                          className="w-full aspect-[2/3] object-cover object-center"
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-              </section>
-            </React.Fragment>
-          ))}
-
-          {/* Team Grid */}
-          <LazyLoading
-            items={team}
-            initialCount={4}
-            loadMoreCount={4}
-            visibleSections={visibleSections}
-          >
-            {(displayedTeam) => (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-                {displayedTeam.map((member: Team, index: number) => (
-                  <div
-                    key={member.id}
-                    ref={index === 0 ? setRef('team') : undefined}
-                    data-section={index === 0 ? 'team' : undefined}
-                    className={`group transition-all duration-1000 ease-out ${
-                      visibleSections.team ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-                    }`}
-                    style={{ transitionDelay: `${index * 150}ms` }}
+              {/* Key Partners Section */}
+              {keyPartners.map((partner, index) => (
+                <React.Fragment key={partner.name}>
+                  <section
+                    ref={setRef(`partner-${index}`)}
+                    data-section={`partner-${index}`}
+                    className="flex items-center py-4 md:py-8"
                   >
-                    <div className="overflow-hidden mb-6">
-                      <img
-                        src={member.image}
-                        alt={member.name}
-                        className="w-full aspect-[2/3] object-cover"
-                        loading={index < 4 ? 'eager' : 'lazy'}
-                        decoding="async"
-                      />
+                    <div className={`grid ${index % 2 === 0
+                      ? 'md:grid-cols-[30%_70%]'
+                      : 'md:grid-cols-[70%_30%]'
+                      } gap-6 lg:gap-10 items-center w-full transition-all duration-1000 ease-out ${visibleSections[`partner-${index}`] ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                      }`}>
+                      {index % 2 === 0 ? (
+                        <>
+                          <div className="w-full overflow-hidden">
+                            <img
+                              src={partner.image}
+                              alt={partner.name}
+                              className="w-full aspect-[2/3] object-cover object-center"
+                            />
+                          </div>
+                          <div className="flex flex-col justify-center">
+                            <h3 className="text-base font-normal text-[#185B30] lowercase">{partner.name}</h3>
+                            <p className="text-base text-[#185B30] mb-8 font-light lowercase">{partner.role}</p>
+                            <div className="space-y-6 text-[#185B30] leading-relaxed font-light lowercase text-left">
+                              {partner.bio.map((paragraph, i) => (
+                                <p key={i} className="text-base">{paragraph}</p>
+                              ))}
+                            </div>
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="flex flex-col justify-center order-2 md:order-1">
+                            <h3 className="text-base font-normal text-[#185B30] lowercase">{partner.name}</h3>
+                            <p className="text-base text-[#185B30] mb-8 font-light lowercase">{partner.role}</p>
+                            <div className="space-y-6 text-[#185B30] leading-relaxed font-light lowercase text-left">
+                              {partner.bio.map((paragraph, i) => (
+                                <p key={i} className="text-base">{paragraph}</p>
+                              ))}
+                            </div>
+                          </div>
+                          <div className="w-full overflow-hidden order-1 md:order-2">
+                            <img
+                              src={partner.image}
+                              alt={partner.name}
+                              className="w-full aspect-[2/3] object-cover object-center"
+                            />
+                          </div>
+                        </>
+                      )}
                     </div>
-                    <h3 className="text-base font-normal text-[#185B30] mb-1 lowercase">{member.name}</h3>
-                    <p className="text-base text-[#185B30] mb-4">{member.role}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </LazyLoading>
+                  </section>
+                </React.Fragment>
+              ))}
 
-        </section>
-
-        {/* CTA */}
-        <section
-          ref={setRef('cta')}
-          data-section="cta"
-          className="bg-[#F5FAF7] py-16"
-        >
-          <div className="max-w-screen-2xl mx-auto px-8">
-            <div className={`text-left transition-all duration-1000 ease-out ${
-              visibleSections.cta ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-            }`}>
-              <h2 className="text-base font-normal text-[#185B30] mb-4 lowercase underline">Join Our Team</h2>
-              <p className="text-base text-[#185B30] leading-relaxed mb-8 lowercase text-left">
-                We are always seeking talented architects and designers who share our commitment to excellence, sustainability, and thoughtful design. If you are passionate about creating spaces that matter, we would love to hear from you.
-              </p>
-              <a
-                href="mailto:huatlim@zlgdesign.com"
-                className="inline-block text-base tracking-[0.08em] font-light lowercase text-[#185B30] px-8 py-3 border border-[#185B30]/60 transition-all duration-300"
-                style={{
-                  backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
-                  background: 'rgba(24, 91, 48, 0.05)',
-                }}
+              {/* Team Grid */}
+              <LazyLoading
+                items={team}
+                initialCount={4}
+                loadMoreCount={4}
+                visibleSections={visibleSections}
               >
-                join the team
-              </a>
-            </div>
-          </div>
-        </section>
+                {(displayedTeam) => (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                    {displayedTeam.map((member: Team, index: number) => (
+                      <div
+                        key={member.id}
+                        ref={index === 0 ? setRef('team') : undefined}
+                        data-section={index === 0 ? 'team' : undefined}
+                        className={`group transition-all duration-1000 ease-out ${visibleSections.team ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                          }`}
+                        style={{ transitionDelay: `${index * 150}ms` }}
+                      >
+                        <div className="overflow-hidden mb-6">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="w-full aspect-[2/3] object-cover"
+                            loading={index < 4 ? 'eager' : 'lazy'}
+                            decoding="async"
+                          />
+                        </div>
+                        <h3 className="text-base font-normal text-[#185B30] mb-1 lowercase">{member.name}</h3>
+                        <p className="text-base text-[#185B30] mb-4">{member.role}</p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </LazyLoading>
 
-      </div>
-    </div>
+            </section>
+
+            {/* CTA */}
+            <section
+              ref={setRef('cta')}
+              data-section="cta"
+              className="bg-[#F5FAF7] py-16"
+            >
+              <div className="max-w-screen-2xl mx-auto px-8">
+                <div className={`text-left transition-all duration-1000 ease-out ${visibleSections.cta ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                  }`}>
+                  <h2 className="text-base font-normal text-[#185B30] mb-4 lowercase underline">Join Our Team</h2>
+                  <p className="text-base text-[#185B30] leading-relaxed mb-8 lowercase text-left">
+                    We are always seeking talented architects and designers who share our commitment to excellence, sustainability, and thoughtful design. If you are passionate about creating spaces that matter, we would love to hear from you.
+                  </p>
+                  <a
+                    href="mailto:huatlim@zlgdesign.com"
+                    className="inline-block text-base tracking-[0.08em] font-light lowercase text-[#185B30] px-8 py-3 border border-[#185B30]/60 transition-all duration-300"
+                    style={{
+                      backdropFilter: 'blur(8px)',
+                      WebkitBackdropFilter: 'blur(8px)',
+                      background: 'rgba(24, 91, 48, 0.05)',
+                    }}
+                  >
+                    join the team
+                  </a>
+                </div>
+              </div>
+            </section>
+
+          </div>
+        </div>
+      </main>
+    </>
   );
 }

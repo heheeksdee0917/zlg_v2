@@ -4,16 +4,23 @@ export interface Project {
   title: string;
   year: number;
   location: string;
+  heroImage: string;
+  images: string[];
   detailContent?: Array<{
     type: string;
     heading?: string;
     content: string;
   }>;
-  heroImage: string;
-  images: string[];
+  seo: {
+    title: string;
+    description: string;
+    canonical: string;
+    image: string;
+  };
 }
 
 export const projects: Project[] = [
+  //tepian tunku
   {
     id: '1',
     slug: 'tepian-tunku',
@@ -34,6 +41,12 @@ export const projects: Project[] = [
         content: 'Private bedrooms are located above, while below, entertainment, play, and sports areas are nestled, surrounded by a lush garden.'
       },
     ],
+    seo: {
+      title: 'Tepian Tunku | Luxury Private Residence | ZLG Design Kuala Lumpur',
+      description: 'Tepian Tunku is a luxury private residence in Kuala Lumpur designed by ZLG Design. A long rectangular home with uninterrupted garden and sunset views, featuring open living spaces and lush surroundings.',
+      canonical: 'https://zlgdesign.com/projects/tepian-tunku',
+      image: '/projects/tepian-tunku/A4.avif'
+    },
     heroImage: '/projects/tepian-tunku/A4.avif',
     images: [
       '/projects/tepian-tunku/A4.avif',
@@ -44,6 +57,7 @@ export const projects: Project[] = [
       '/projects/tepian-tunku/A6.avif',
     ],
   },
+  //point-92
   {
     id: '2',
     slug: 'point-92',
@@ -57,7 +71,7 @@ export const projects: Project[] = [
       },
       {
         type: 'text',
-        content: 'The punctuated façade is similar to all of zlgdesign\'s works and that is not to say that the appeal is lost.In fact, the play of ambience through the incorporation of day lighting with façade treatment is a tried and true timeless aesthetic, as are the impeccable play of materials the architects are known for.' 
+        content: 'The punctuated façade is similar to all of zlgdesign\'s works and that is not to say that the appeal is lost.In fact, the play of ambience through the incorporation of day lighting with façade treatment is a tried and true timeless aesthetic, as are the impeccable play of materials the architects are known for.'
       },
       {
         type: 'text',
@@ -69,7 +83,7 @@ export const projects: Project[] = [
       },
       {
         type: 'text',
-        content: 'The reception desk with a pandomo recessed and undulating rebated wall greets the visitor and reminds them of the graphics and geometry of the building\'s façade walls. "As an office plan, the generating feature of the floor plate is in fact a cut-out space which comprises of several levels of voids connected through gardens and meshes of vertical planting. The centre support column is braced to either side with different thickness of beams each corresponding to different floor forces framing the vertical space that is the garden," explains Huat Lim.There is also a special screen that rises several levels in the façade and made of layers of greenery supported on a series of steel wire ropes pulled between the floors.' 
+        content: 'The reception desk with a pandomo recessed and undulating rebated wall greets the visitor and reminds them of the graphics and geometry of the building\'s façade walls. "As an office plan, the generating feature of the floor plate is in fact a cut-out space which comprises of several levels of voids connected through gardens and meshes of vertical planting. The centre support column is braced to either side with different thickness of beams each corresponding to different floor forces framing the vertical space that is the garden," explains Huat Lim.There is also a special screen that rises several levels in the façade and made of layers of greenery supported on a series of steel wire ropes pulled between the floors.'
       },
       {
         type: 'text',
@@ -88,6 +102,12 @@ export const projects: Project[] = [
         content: 'Elegantly rising from the slopes, the slanting walls in the façade continues the natural geometry of the site while the rectangular punctuations complement the ever developing built environment in Damansara Perdana. Light permeating through the punctured façade promises a soothing and safe ambience, highlighted further by the backing hills as well as the warm and raw colours of the chosen materials and finishes. There is no denying that this is a much anticipated addition to the trendy workplaces that seem to centralise upon this hilly area.'
       },
     ],
+    seo: {
+      title: 'Point 92 | High-End Commercial Office Building | ZLG Design',
+      description: 'Point 92 is a modern high-rise office and commercial building in Damansara Perdana designed by ZLG Design. Featuring a striking punctuated façade and vertical gardens.',
+      canonical: 'https://zlgdesign.com/projects/point-92',
+      image: '/projects/point92/A1.avif'
+    },
     heroImage: '/projects/point92/A1.avif',
     images: [
       '/projects/point92/A1.avif',
@@ -98,6 +118,7 @@ export const projects: Project[] = [
       '/projects/point92/A6.avif',
     ],
   },
+  //boh visitor centre
   {
     id: '3',
     slug: 'boh-visitor-centre',
@@ -112,7 +133,7 @@ export const projects: Project[] = [
       },
       {
         type: 'text',
-        content: 'The BOH Visitor Centre offers guests the opportunity to appreciate the estate\'s scenic beauty while accommodating the estate\'s operational needs, including meeting sales targets, housing the existing tea shop, and enhancing visitor facilities. The true experience of the building comes not from intricate detailing or construction techniques alone, but from its thoughtful disposition.' 
+        content: 'The BOH Visitor Centre offers guests the opportunity to appreciate the estate\'s scenic beauty while accommodating the estate\'s operational needs, including meeting sales targets, housing the existing tea shop, and enhancing visitor facilities. The true experience of the building comes not from intricate detailing or construction techniques alone, but from its thoughtful disposition.'
       },
       {
         type: 'text',
@@ -136,6 +157,12 @@ export const projects: Project[] = [
         content: 'BOH Visitor Centre, Cameron Highlands, 2006. BOH Extension, Cameron Highlands, 2019.'
       },
     ],
+    seo: {
+      title: 'BOH Visitor Centre | Tourism Architecture | ZLG Design Cameron Highlands',
+      description: 'BOH Visitor Centre in Cameron Highlands designed by ZLG Design. A landmark architectural project celebrating Malaysia’s tea heritage with dramatic views and thoughtful integration into the landscape.',
+      canonical: 'https://zlgdesign.com/projects/boh-visitor-centre',
+      image: '/projects/boh-visitor/A1.avif'
+    },
     heroImage: '/projects/boh-visitor/A1.avif',
     images: [
       '/projects/boh-visitor/A1.avif',
@@ -146,6 +173,7 @@ export const projects: Project[] = [
 
     ],
   },
+  //wangsa ukay
   {
     id: '4',
     slug: 'wangsa-ukay-residence',
@@ -174,6 +202,12 @@ export const projects: Project[] = [
         content: 'This project taught us that architecture is a never-ending process. The building is alive, responding to what we place inside it and what we take away from it; an evolving dialogue between space, light, air, and the life it shelters.'
       },
     ],
+    seo: {
+      title: 'Wangsa Ukay Residence | Naturally Ventilated Homes | ZLG Design KL',
+      description: 'Wangsa Ukay Residence in Kuala Lumpur by ZLG Design. A rare naturally ventilated luxury home with strong connection to nature and tropical living.',
+      canonical: 'https://zlgdesign.com/projects/wangsa-ukay-residence',
+      image: '/projects/wangsa-ukay/A1.avif'
+    },
     heroImage: '/projects/wangsa-ukay/A1.avif',
     images: [
       '/projects/wangsa-ukay/A1.avif',
@@ -182,6 +216,7 @@ export const projects: Project[] = [
       '/projects/wangsa-ukay/A4.avif',
     ],
   },
+  //lantern hotel
   {
     id: '5',
     slug: 'lantern-hotel',
@@ -191,7 +226,7 @@ export const projects: Project[] = [
     detailContent: [
       {
         type: 'text',
-        content: 'Lantern Hotel is a 49-room facility. The project started with a casual walk with the clients through Chinatown, Kuala Lumpur, where we witnessed a dilapidated office space that had operated as a bookstore for several years. Its location within the city\'s heritage zone made it a rare opportunity, though the project came with a very small fee and an unusually tight budget.' 
+        content: 'Lantern Hotel is a 49-room facility. The project started with a casual walk with the clients through Chinatown, Kuala Lumpur, where we witnessed a dilapidated office space that had operated as a bookstore for several years. Its location within the city\'s heritage zone made it a rare opportunity, though the project came with a very small fee and an unusually tight budget.'
       },
       {
         type: 'text',
@@ -206,6 +241,12 @@ export const projects: Project[] = [
         content: 'Inside, Lantern Hotel features an open layout with a narrow, triple-height atrium, its windows overlooking the void and drawing light deep into the space, creating a sense of openness and continuity.'
       },
     ],
+    seo: {
+      title: 'Lantern Hotel | Boutique Hotel in Kuala Lumpur | ZLG Design',
+      description: 'Lantern Hotel in Kuala Lumpur’s Chinatown designed by ZLG Design. A 49-room boutique hotel featuring a dramatic triple-height atrium and striking dark brick façade.',
+      canonical: 'https://zlgdesign.com/projects/lantern-hotel',
+      image: '/projects/lantern-hotel/A4.avif'
+    },
     heroImage: '/projects/lantern-hotel/A4.avif',
     images: [
       '/projects/lantern-hotel/A1.avif',
@@ -216,6 +257,7 @@ export const projects: Project[] = [
       '/projects/lantern-hotel/A6.avif',
     ],
   },
+  //nimes museum
   {
     id: '6',
     slug: 'nimes-mediateque-museum',
@@ -225,7 +267,7 @@ export const projects: Project[] = [
     detailContent: [
       {
         type: 'text',
-        content: 'the mediateque was originally a competition in which huat worked on when he was at foster 1984-87 based in london.' 
+        content: 'the mediateque was originally a competition in which huat worked on when he was at foster 1984-87 based in london.'
       },
       {
         type: 'text',
@@ -236,6 +278,12 @@ export const projects: Project[] = [
         content: 'the mediatecque is unique for its location facing la maison carre andnits glass staircase and intricate rooflights. many sketches were produced by the team, among them a large axonometric which covered the entire wall of their studio in jardin de la fontaines in nimes.'
       },
     ],
+    seo: {
+      title: 'Nîmes Médiathèque Museum | Cultural Architecture | ZLG Design',
+      description: 'Nîmes Médiathèque Museum in Nîmes, France – an award-winning cultural project by ZLG Design. A contemporary museum that harmoniously blends modern architecture with the historic fabric of the city.',
+      canonical: 'https://zlgdesign.com/projects/nimes-mediateque-museum',
+      image: '/projects/nimes-mediateque/A1.avif'
+    },
     heroImage: '/projects/nimes-museum/A1.avif',
     images: [
       '/projects/nimes-museum/A1.avif',
@@ -244,6 +292,7 @@ export const projects: Project[] = [
       '/projects/nimes-museum/A4.avif',
     ],
   },
+  //the stonor
   {
     id: '7',
     slug: 'the-stonor',
@@ -253,7 +302,7 @@ export const projects: Project[] = [
     detailContent: [
       {
         type: 'text',
-        content: 'the stonor is a development that is conceptually a reflection of modern urban life. it is iconic in terms of its arrival statement- rather than its facade design. open plan high ceilings and natural finishes are abundant and telling characteristics of the spaces on the ground floor.' 
+        content: 'the stonor is a development that is conceptually a reflection of modern urban life. it is iconic in terms of its arrival statement- rather than its facade design. open plan high ceilings and natural finishes are abundant and telling characteristics of the spaces on the ground floor.'
       },
       {
         type: 'text',
@@ -264,6 +313,12 @@ export const projects: Project[] = [
         content: 'the porosity of the ground levels and the open deck concept at the pool leaves are clear demarcations of how urban lifestyles should evolve into rien next generation and typology. never anywhere has anything of this sort been implemented for city dwellers. engagement with nature without compromising security or safety of residents of any generation.'
       },
     ],
+    seo: {
+      title: 'The Stonor | Luxury High-Rise Condominium | ZLG Design KL',
+      description: 'The Stonor luxury high-rise condominium at the Golden Triangle in Kuala Lumpur, designed by ZLG Design. Open-plan living with high ceilings and stunning city views.',
+      canonical: 'https://zlgdesign.com/projects/the-stonor',
+      image: '/projects/the-stonor/CP.avif'
+    },
     heroImage: '/projects/the-stonor/CP.avif',
     images: [
       '/projects/the-stonor/CP.avif',
@@ -272,6 +327,17 @@ export const projects: Project[] = [
       '/projects/the-stonor/A3.avif',
       '/projects/the-stonor/A4.avif',
       '/projects/the-stonor/A5.avif',
+      '/projects/the-stonor/S1.avif',
+      '/projects/the-stonor/S2.avif',
+      '/projects/the-stonor/S3.avif',
+      '/projects/the-stonor/S4.avif',
+      '/projects/the-stonor/S5.avif',
+      '/projects/the-stonor/S6.avif',
+      '/projects/the-stonor/S7.avif',
+      '/projects/the-stonor/S8.avif',
+      '/projects/the-stonor/S9.avif',
+      '/projects/the-stonor/S10.avif',
+      '/projects/the-stonor/S11.avif'
     ],
   },
 ];

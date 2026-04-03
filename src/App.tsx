@@ -1,3 +1,4 @@
+import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, lazy, Suspense } from 'react';
 import React from 'react';
@@ -20,7 +21,6 @@ function ScrollToTop() {
   return null;
 }
 
-// ← Add this
 function AppLayout() {
   const { pathname } = useLocation();
   const hideFooter = /^\/projects\/.+/.test(pathname);
@@ -28,34 +28,34 @@ function AppLayout() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-grow">
-        <Suspense fallback={
-          <div className="flex items-center justify-center min-h-[60vh]">
-            <div className="animate-pulse text-gray-600">Loading...</div>
-          </div>
-        }>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/philosophy" element={<Philosophy />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/projects/:slug" element={<ProjectDetails />} />
-            <Route path="/people" element={<People />} />
-            <Route path="/partner" element={<Partner />} />
-            <Route path="/contact" element={<ContactUs />} />
-          </Routes>
-        </Suspense>
-      </main>
-      {!hideFooter && <Footer />}  {/* ← conditional footer */}
+      <Suspense fallback={
+        <div className="flex items-center justify-center min-h-[60vh]">
+          <div className="animate-pulse text-gray-600">Loading...</div>
+        </div>
+      }>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/philosophy" element={<Philosophy />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:slug" element={<ProjectDetails />} />
+          <Route path="/people" element={<People />} />
+          <Route path="/partner" element={<Partner />} />
+          <Route path="/contact" element={<ContactUs />} />
+        </Routes>
+      </Suspense>
+      {!hideFooter && <Footer />}
     </div>
   );
 }
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <AppLayout />
-    </Router>
+    <HelmetProvider>
+      <Router>
+        <ScrollToTop />
+        <AppLayout />
+      </Router>
+    </HelmetProvider>
   );
 }
 

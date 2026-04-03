@@ -1,7 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { philosophySections } from '../data/philosophy';
+import SEO from '../components/seo'
 
 function HeroSection() {
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Our Philosophy | ZLG Design – Architecture Studio in Kuala Lumpur",
+    "description": "Discover the philosophy of ZLG Design. We believe in creating timeless architecture that responds sensitively to context, climate, and human experience.",
+    "url": "https://zlgdesign.com/philosophy"
+  };
+
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -246,15 +256,26 @@ export default function Philosophy() {
   };
 
   return (
-    <div className={`transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
-      <HeroSection />
-      <div className="flex flex-col">
-        {philosophySections.map((section, index) => (
-          <React.Fragment key={section.id}>
-            {renderSection(section, index)}
-          </React.Fragment>
-        ))}
-      </div>
-    </div>
+    <>
+      <SEO
+        title="Our Philosophy | ZLG Design – Architecture Studio in Kuala Lumpur(KL), Malaysia"
+        description="Discover the philosophy behind ZLG Design. We believe in creating timeless architecture that responds to context, climate, and human experience — blending innovation with sensitivity to place."
+        canonical="https://zlgdesign.com/philosophy"
+        schema={schema}
+      />
+      <main>
+        <h1>read ZLG Design's Philosophy in Kuala Lumpur (KL), Malaysia</h1>
+        <div className={`transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
+          <HeroSection />
+          <div className="flex flex-col">
+            {philosophySections.map((section, index) => (
+              <React.Fragment key={section.id}>
+                {renderSection(section, index)}
+              </React.Fragment>
+            ))}
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
