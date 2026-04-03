@@ -102,7 +102,7 @@ export default function Navbar() {
                 <span className="block w-full h-[1.5px] bg-white transform transition-all duration-300 origin-center" />
                 <span className="block w-full h-[1.5px] bg-white transform transition-all duration-300 origin-center" />
               </div>
-              <span className="hidden md:block text-sm text-white lowercase leading-none ml-2">
+              <span className="hidden md:block text-sm text-white lowercase leading-none ml-3">
                 menu
               </span>
             </button>
