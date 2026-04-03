@@ -1,17 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { philosophySections } from '../data/philosophy';
-import SEO from '../components/seo'
+import { SEO } from '../components/seo';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Our Philosophy | ZLG Design – Architecture Studio in Kuala Lumpur",
+  "description": "Discover the philosophy of ZLG Design. We believe in creating timeless architecture that responds sensitively to context, climate, and human experience.",
+  "url": "https://zlgdesign.com/philosophy"
+};
 
 function HeroSection() {
-
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Our Philosophy | ZLG Design – Architecture Studio in Kuala Lumpur",
-    "description": "Discover the philosophy of ZLG Design. We believe in creating timeless architecture that responds sensitively to context, climate, and human experience.",
-    "url": "https://zlgdesign.com/philosophy"
-  };
-
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
@@ -21,9 +20,7 @@ function HeroSection() {
   }, []);
 
   const vh = typeof window !== 'undefined' ? window.innerHeight : 800;
-
   const snapIndex = Math.min(2, Math.floor(scrollY / vh));
-
   const imageBlur = snapIndex >= 1 ? 8 : 0;
   const overlayOpacity = snapIndex >= 1 ? Math.min(0.7, (scrollY - vh) / (vh * 0.5)) : 0;
 
@@ -37,7 +34,7 @@ function HeroSection() {
         className="hidden md:block flex-shrink-0 overflow-hidden"
         style={{ height: '75vh', aspectRatio: '2/3', animation: 'floatPhoto 6s ease-in-out infinite' }}
       >
-        <img src={imgSrc} alt="" className="w-full h-full object-cover object-center" />
+        <img src={imgSrc} alt="" className="w-full h-full object-cover object-center" loading="lazy" />
       </div>
     </div>
   );
@@ -51,13 +48,14 @@ function HeroSection() {
           100% { transform: translateY(0px); }
         }
       `}</style>
-      <img src="/general/Philosophy.avif" alt="" className="hidden" fetchPriority="high" />
+
+      {/* No hidden preload img — handled by <link rel="preload"> in SEO instead */}
+
       <div className="sticky top-0 h-screen w-full overflow-hidden">
 
         {/* Background image */}
         <div
           className="absolute inset-0 bg-cover bg-center"
-
           style={{
             backgroundImage: `url('/general/Philosophy.avif')`,
             backgroundPosition: 'center',
@@ -66,10 +64,11 @@ function HeroSection() {
             transition: 'filter 0.8s ease',
           }}
         />
-        {/* Dark overlay */}
+
+        {/* Base dark overlay */}
         <div className="absolute inset-0 bg-black/40" />
 
-        {/* Dark overlay — kicks in after step 1 */}
+        {/* Progressive dark overlay — kicks in after step 1 */}
         <div
           className="absolute inset-0 bg-black"
           style={{
@@ -84,7 +83,7 @@ function HeroSection() {
           style={{ opacity: snapIndex === 0 ? 1 : 0 }}
         >
           <p className="text-xs tracking-[0.2em] lowercase font-light text-white/60 mb-1">our thinking</p>
-          <h1 className="text-4xl md:text-5xl font-extralight lowercase text-white">philosophy</h1>
+          <p className="text-4xl md:text-5xl font-extralight lowercase text-white">philosophy</p>
         </div>
 
         {/* Panel 2 */}
@@ -237,7 +236,7 @@ export default function Philosophy() {
                 {section.content.publications?.map((pub, i) => (
                   <div key={i} className={`border border-gray-200 transition-all duration-1000 ease-out hover:shadow-lg flex flex-col overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${(i + 2) * 100}ms` }}>
                     <div className="w-full aspect-[2/3] bg-gray-100 overflow-hidden">
-                      <img src={pub.image} alt={pub.title} className="w-full h-full object-cover" />
+                      <img src={pub.image} alt={pub.title} className="w-full h-full object-cover" loading="lazy" />
                     </div>
                     <div className="p-6">
                       <h3 className="text-sm font-normal mb-2 lowercase text-[#185B30]">{pub.title}</h3>
@@ -261,10 +260,11 @@ export default function Philosophy() {
         title="Our Philosophy | ZLG Design – Architecture Studio in Kuala Lumpur(KL), Malaysia"
         description="Discover the philosophy behind ZLG Design. We believe in creating timeless architecture that responds to context, climate, and human experience — blending innovation with sensitivity to place."
         canonical="https://zlgdesign.com/philosophy"
+        preloadImage="/general/Philosophy.avif"
         schema={schema}
       />
       <main>
-        <h1>read ZLG Design's Philosophy in Kuala Lumpur (KL), Malaysia</h1>
+        <h1 className="sr-only">ZLG Design Philosophy – Architecture Studio in Kuala Lumpur, Malaysia</h1>
         <div className={`transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}>
           <HeroSection />
           <div className="flex flex-col">
