@@ -1,8 +1,6 @@
 import { SEO } from '../components/seo';
 import React, { useState, useEffect, useRef } from 'react';
 
-
-
 export default function ContactUs() {
     const [fadeIn, setFadeIn] = useState(false);
     const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>({});
