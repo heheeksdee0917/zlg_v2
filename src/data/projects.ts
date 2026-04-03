@@ -263,7 +263,7 @@ export const projects: Project[] = [
     slug: 'nimes-mediateque-museum',
     title: 'Nimes Mediateque Museum',
     year: 2015,
-    location: 'kuala lumpur',
+    location: 'nimes, france',
     detailContent: [
       {
         type: 'text',
