@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { keyPartners, journeyPartners, signatureProjects } from '../data/partner';
-import SEO from '../components/seo'
+import { SEO } from '../components/seo';
 
 function HeroSection() {
   const [panel, setPanel] = useState(0);
