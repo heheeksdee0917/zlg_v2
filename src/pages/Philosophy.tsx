@@ -25,7 +25,7 @@ function HeroSection() {
   const overlayOpacity = snapIndex >= 1 ? Math.min(0.7, (scrollY - vh) / (vh * 0.5)) : 0;
 
   const PanelContent = ({ text, heading, imgSrc }: { text: string; heading?: string; imgSrc: string }) => (
-    <div className="w-full flex items-center justify-between px-8 md:px-16 max-w-screen-2xl mx-auto">
+<div className="w-full flex items-center justify-start gap-40 px-8 md:px-16 max-w-screen-2xl mx-auto">
       <div className="max-w-2xl">
         {heading && <h2 className="text-base font-normal mb-4 lowercase underline text-white">{heading}</h2>}
         <p className="text-base text-white leading-relaxed lowercase text-left">{text}</p>

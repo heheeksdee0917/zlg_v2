@@ -1,4 +1,4 @@
-import { Linkedin,Threads, Instagram, Mail, MapPin } from 'lucide-react';
+import { Linkedin, AtSign, Instagram, Mail, MapPin } from 'lucide-react';
 import React from 'react';
 
 export default function Footer() {
@@ -34,7 +34,7 @@ export default function Footer() {
                 style={{ color: '#185B30' }}
                 aria-label="Threads"
               >
-                <Threads size={20} />
+                <AtSign size={20} />
               </a>
               <a
                 href="https://www.instagram.com/zlgdesign/?hl=en"

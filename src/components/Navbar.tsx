@@ -99,8 +99,8 @@ export default function Navbar() {
               aria-label="Toggle menu"
             >
               <div className="relative w-5 h-2 flex flex-col justify-between">
-                <span className="block w-full h-[1.5px] bg-white transform transition-all duration-300 origin-center" />
-                <span className="block w-full h-[1.5px] bg-white transform transition-all duration-300 origin-center" />
+                <span className="block w-full h-[1px] bg-white transform transition-all duration-300 origin-center" />
+                <span className="block w-full h-[1px] bg-white transform transition-all duration-300 origin-center" />
               </div>
               <span className="hidden md:block text-base text-white lowercase leading-none ml-3">
                 menu
