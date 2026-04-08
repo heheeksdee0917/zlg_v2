@@ -1,4 +1,4 @@
-import { Linkedin, Mail, MapPin } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
 import React from 'react';
 
 export default function Footer() {
@@ -34,15 +34,26 @@ export default function Footer() {
                 style={{ color: '#185B30' }}
                 aria-label="Threads"
               >
-                <AtSign size={20} />
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94" />
+                </svg>
               </a>
-              <a
-                href="https://www.instagram.com/zlgdesign/?hl=en"
-                className="transition-colors hover:opacity-70"
-                style={{ color: '#185B30' }}
-                aria-label="Instagram"
-              >
-                <Instagram size={20} />
+              <a href="https://www.instagram.com/zlgdesign/?hl=en" className="transition-colors hover:opacity-70" style={{ color: '#185B30' }} aria-label="Instagram">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+                </svg>
               </a>
             </div>
           </div>

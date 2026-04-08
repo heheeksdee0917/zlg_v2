@@ -257,7 +257,6 @@ export const projects: Project[] = [
       '/projects/lantern-hotel/A6.avif',
     ],
   },
-
   //the stonor
   {
     id: '6',
