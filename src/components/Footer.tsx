@@ -1,4 +1,4 @@
-import { Linkedin, Instagram, Mail, MapPin } from 'lucide-react';
+import { Linkedin,Threads, Instagram, Mail, MapPin } from 'lucide-react';
 import React from 'react';
 
 export default function Footer() {
@@ -29,12 +29,12 @@ export default function Footer() {
             <h4 className="text-xs tracking-wider mb-4 font-light" style={{ color: '#185B30' }}>follow us</h4>
             <div className="flex space-x-4">
               <a
-                href="https://www.linkedin.com/company/zlg-sdn-bhd/about/"
+                href="https://www.threads.com/@huatlim"
                 className="transition-colors hover:opacity-70"
                 style={{ color: '#185B30' }}
-                aria-label="LinkedIn"
+                aria-label="Threads"
               >
-                <Linkedin size={20} />
+                <Threads size={20} />
               </a>
               <a
                 href="https://www.instagram.com/zlgdesign/?hl=en"

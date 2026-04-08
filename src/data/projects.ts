@@ -257,44 +257,10 @@ export const projects: Project[] = [
       '/projects/lantern-hotel/A6.avif',
     ],
   },
-  //nimes museum
-  {
-    id: '6',
-    slug: 'nimes-mediateque-museum',
-    title: 'Nimes Mediateque Museum',
-    year: 2015,
-    location: 'kuala lumpur',
-    detailContent: [
-      {
-        type: 'text',
-        content: 'the mediateque was originally a competition in which huat worked on when he was at foster 1984-87 based in london.'
-      },
-      {
-        type: 'text',
-        content: 'huat was one of four english architects who moved to france to set up the foster team in lyons france under the direction of martin francis, norman connection based in south of france.'
-      },
-      {
-        type: 'text',
-        content: 'the mediatecque is unique for its location facing la maison carre andnits glass staircase and intricate rooflights. many sketches were produced by the team, among them a large axonometric which covered the entire wall of their studio in jardin de la fontaines in nimes.'
-      },
-    ],
-    seo: {
-      title: 'Nîmes Médiathèque Museum | Cultural Architecture | ZLG Design',
-      description: 'Nîmes Médiathèque Museum in Nîmes, France – an award-winning cultural project by ZLG Design. A contemporary museum that harmoniously blends modern architecture with the historic fabric of the city.',
-      canonical: 'https://zlgdesign.com/projects/nimes-mediateque-museum',
-      image: '/projects/nimes-mediateque/A1.avif'
-    },
-    heroImage: '/projects/nimes-museum/A1.avif',
-    images: [
-      '/projects/nimes-museum/A1.avif',
-      '/projects/nimes-museum/A2.avif',
-      '/projects/nimes-museum/A3.avif',
-      '/projects/nimes-museum/A4.avif',
-    ],
-  },
+
   //the stonor
   {
-    id: '7',
+    id: '6',
     slug: 'the-stonor',
     title: 'the stonor',
     year: 2022,
