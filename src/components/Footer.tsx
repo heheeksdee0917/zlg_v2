@@ -1,4 +1,4 @@
-import { Linkedin, AtSign, Instagram, Mail, MapPin } from 'lucide-react';
+import { AtSign, Instagram, Mail, MapPin } from 'lucide-react';
 import React from 'react';
 
 export default function Footer() {
