@@ -163,11 +163,11 @@ export default function Philosophy() {
             <div className="max-w-screen-2xl mx-auto px-8 w-full">
               <div className="flex flex-col md:grid md:grid-cols-2 gap-8 md:gap-16">
                 <div className={`flex flex-col justify-start transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                  <h2 className="text-4xl font-normal text-[#185B30]">{section.title}</h2>
+                  <h2 className="text-4xl font-normal text-[#185B30] lowercase">{section.title}</h2>
                 </div>
                 <div className={`flex flex-col justify-start transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: '200ms' }}>
                   {section.content.text?.map((p, i) => (
-                    <p key={i} className="text-base text-[#185B30] leading-relaxed mb-6 last:mb-0">{p}</p>
+                    <p key={i} className="text-base text-[#185B30] leading-relaxed mb-6 last:mb-0 lowercase">{p}</p>
                   ))}
                 </div>
               </div>
@@ -196,8 +196,8 @@ export default function Philosophy() {
               <div className="grid md:grid-cols-2 gap-16">
                 {section.content.columns?.map((col, i) => (
                   <div key={i} className={`transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${i * 150}ms` }}>
-                    <h3 className="text-base font-normal text-[#185B30] mb-4">{col.title}</h3>
-                    <p className="text-base text-[#185B30] leading-relaxed text-left">{col.text}</p>
+                    <h3 className="text-base font-normal text-[#185B30] mb-4 lowercase">{col.title}</h3>
+                    <p className="text-base text-[#185B30] leading-relaxed text-left lowercase">{col.text}</p>
                   </div>
                 ))}
               </div>
@@ -231,7 +231,7 @@ export default function Philosophy() {
         return (
           <section key={section.id} ref={setRef(section.id)} data-section={section.id} className={`relative bg-[#F5FAF7] py-24 transition-all duration-1000 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
             <div className="max-w-screen-2xl mx-auto px-8">
-              <h2 className="text-base font-normal mb-8 text-[#185B30]">{section.title}</h2>
+              <h2 className="text-base font-normal mb-8 text-[#185B30] lowercase">{section.title}</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {section.content.publications?.map((pub, i) => (
                   <div key={i} className={`border border-gray-200 transition-all duration-1000 ease-out hover:shadow-lg flex flex-col overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ transitionDelay: `${(i + 2) * 100}ms` }}>
