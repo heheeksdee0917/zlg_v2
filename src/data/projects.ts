@@ -287,6 +287,7 @@ export const projects: Project[] = [
     heroImage: '/projects/the-stonor/CP.avif',
     images: [
       '/projects/the-stonor/CP.avif',
+      '/projects/the-stonor/A1.avif',
       '/projects/the-stonor/A2.avif',
       '/projects/the-stonor/A3.avif',
       '/projects/the-stonor/A4.avif',
