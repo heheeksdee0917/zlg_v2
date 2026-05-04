@@ -304,4 +304,45 @@ export const projects: Project[] = [
       '/projects/the-stonor/S11.avif'
     ],
   },
+    //the stonor
+    {
+      id: '7',
+      slug: 'bukit-tunku-no-7',
+      title: 'Bukit Tunku No.7',
+      year: 2022,
+      location: 'kuala lumpur',
+      detailContent: [
+        {
+          type: 'text',
+          content: 'This project involved the renovation of a bungalow perched atop Bukit Tunku, accessed via a steep, greenery-lined slope. Upon arrival, visitors are greeted by modern bare concretesteps and vent blocks — a striking interplay of repetition and material complexity that contrasts beautifully with the organic forms of the surrounding vegetation.'
+        },
+        {
+          type: 'text',
+          content: 'Previously a closed and compartmentalized structure, the redesigned interior now offers an uninterrupted view through the entire house. The layout has been opened up, with multiple new access points and framed vistas that make the home more porous and interconnected — both internally and with the surrounding landscape. This openness fosters a sense of togetherness within a light-filled, fluid living environment.'
+        },
+        {
+          type: 'text',
+          content: 'True to ZLG’s signature material and colour palette, timber pivot panels, plywood shelving, and cladding introduce warmth and natural texture. These elements soften the cool greymtones of the concrete surfaces, while raw material finishes introduce vibrant visual contrast — evoking a subtle Corbusian sensibility. The variety of concrete treatments — polished, broom-finished, washed, and grasscrete — adds richness in texture, colour, and spatial reading across the house.'
+        },
+        {
+          type: 'text',
+          content: 'The Sonia Residence is a home of sculptural moments — where light, shadow, and material interplay elevate everyday elements into artistic expressions. With movable walls, dramatic concrete forms, and intentional use of natural materials, the house becomes a living canvas of architectural experimentation.'
+        },
+      ],
+      seo: {
+        title: 'Bukit Tunku No.7 | Private Bungalow | ZLG Design KL',
+        description: 'The Stonor luxury high-rise condominium at the Golden Triangle in Kuala Lumpur, designed by ZLG Design. Open-plan living with high ceilings and stunning city views.',
+        canonical: 'https://zlgdesign.com/projects/bukit-tunku-no-7',
+        image: '/projects/bukit-tunku-no-7/CP.avif'
+      },
+      heroImage: '/projects/bukit-tunku-no-7/CP.avif',
+      images: [
+        '/projects/bukit-tunku-no-7/CP.avif',
+        '/projects/bukit-tunku-no-7/A1.avif',
+        '/projects/bukit-tunku-no-7/A2.avif',
+        '/projects/bukit-tunku-no-7/A3.avif',
+        '/projects/bukit-tunku-no-7/A4.avif',
+        '/projects/bukit-tunku-no-7/A5.avif',
+      ],
+    },
 ];
