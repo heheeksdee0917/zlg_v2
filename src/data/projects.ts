@@ -208,8 +208,9 @@ export const projects: Project[] = [
       canonical: 'https://zlgdesign.com/projects/wangsa-ukay-residence',
       image: '/projects/wangsa-ukay/A1.avif'
     },
-    heroImage: '/projects/wangsa-ukay/A1.avif',
+    heroImage: '/projects/wangsa-ukay/CP.avif',
     images: [
+      '/projects/wangsa-ukay/CP.avif',
       '/projects/wangsa-ukay/A1.avif',
       '/projects/wangsa-ukay/A2.avif',
       '/projects/wangsa-ukay/A3.avif',

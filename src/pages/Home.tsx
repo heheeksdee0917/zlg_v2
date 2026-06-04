@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
+import { SEO } from '../components/seo';
 
 const slides = [
   {
@@ -43,6 +44,13 @@ export default function Home() {
 
   return (
     <>
+      <SEO
+        title="zlgdesign | Award-Winning Architect in Kuala Lumpur (KL), Malaysia"
+        description="zlgdesign is an award-winning architecture firm in Kuala Lumpur with 20+ years of experience. We specialise in residential, commercial, institutional, and masterplanning projects across Malaysia."
+        canonical="https://zlgdesign.com/"
+        image="/projects/boh-visitor/A1.avif"
+      />
+
       <style>{`
         @keyframes fadeUp {
           from { opacity: 0; transform: translateY(12px); }
@@ -72,9 +80,10 @@ export default function Home() {
         className="transition-opacity duration-700"
         style={{ opacity: fadeIn ? 1 : 0 }}
       >
+
+        {/* ── Hero Slideshow ── */}
         <section className="relative w-full h-screen overflow-hidden">
 
-          {/* Images */}
           {slides.map((s, i) => (
             <div
               key={i}
@@ -90,12 +99,10 @@ export default function Home() {
             />
           ))}
 
-          {/* Dark overlay */}
           <div className="absolute inset-0 bg-black/15 z-10" />
 
-          {/* Text — bottom, center-aligned */}
           <div className="absolute z-20 bottom-24 left-0 right-0 flex flex-col items-center text-white text-center px-8">
-          <p
+            <p
               className="fade-up text-xs tracking-[0.1em] lowercase font-light mb-2 opacity-60"
               style={{ animationDelay: '0.2s' }}
             >
@@ -107,8 +114,6 @@ export default function Home() {
             >
               zlgdesign
             </h1>
-
-
             <Link
               to="/projects"
               className="fade-up inline-block text-base tracking-[0.08em] font-light lowercase text-white px-8 py-3 border border-white/60 transition-all duration-300 relative"
@@ -123,7 +128,6 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* Slide indicators — bottom right */}
           <div className="absolute z-20 bottom-16 right-12 md:right-16 flex flex-col items-end gap-4">
             {slides.map((_, i) => (
               <button
@@ -131,13 +135,11 @@ export default function Home() {
                 onClick={() => { setCurrentSlide(i); setNameKey((k) => k + 1); }}
                 className="flex items-center gap-2 group"
               >
-                <span className={`block h-px transition-all duration-700 ease-in-out ${i === currentSlide ? 'w-10 bg-white' : 'w-4 bg-white/30 group-hover:bg-white/60 group-hover:w-6'
-                  }`} />
+                <span className={`block h-px transition-all duration-700 ease-in-out ${i === currentSlide ? 'w-10 bg-white' : 'w-4 bg-white/30 group-hover:bg-white/60 group-hover:w-6'}`} />
               </button>
             ))}
           </div>
 
-          {/* Progress bar */}
           <div className="absolute bottom-0 left-0 right-0 h-px bg-white/15 z-20">
             <div
               key={`${currentSlide}-progress`}
@@ -147,10 +149,76 @@ export default function Home() {
 
         </section>
 
-        {/* Philosophy Section */}
+        {/* ── Introduction Section ── */}
+        <section
+          className="w-full py-24 px-8 md:px-20 lg:px-32"
+          style={{ backgroundColor: '#F5FAF7' }}
+        >
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-start">
+
+            {/* Left — label + stat pillars */}
+            <div className="flex flex-col gap-10">
+              <div>
+                <p className="text-xs tracking-[0.15em] lowercase font-light text-[#185B30] opacity-50 mb-3">
+                  about the practice
+                </p>
+                <p className="text-5xl md:text-6xl font-light lowercase tracking-tight leading-none text-[#185B30]">
+                  20+
+                </p>
+                <p className="text-sm tracking-[0.1em] lowercase font-light text-[#185B30] opacity-60 mt-2">
+                  years in practice
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 gap-8 pt-6 border-t border-[#185B30]/20">
+                <div>
+                  <p className="text-2xl font-light text-[#185B30] lowercase">malaysia</p>
+                  <p className="text-xs tracking-[0.1em] font-light text-[#185B30] opacity-50 mt-1 lowercase">
+                    based in kuala lumpur
+                  </p>
+                </div>
+                <div>
+                  <p className="text-2xl font-light text-[#185B30] lowercase">award-winning</p>
+                  <p className="text-xs tracking-[0.1em] font-light text-[#185B30] opacity-50 mt-1 lowercase">
+                    recognised design excellence
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right — prose */}
+            <div className="flex flex-col gap-6">
+              <p className="text-xl md:text-2xl font-light leading-relaxed lowercase tracking-wide text-[#185B30]">
+                zlgdesign is an architecture practice rooted in kuala lumpur, malaysia —
+                building meaningful spaces for over two decades.
+              </p>
+              <p className="text-sm font-light leading-relaxed text-[#185B30] opacity-70">
+                Founded on the belief that architecture is inseparable from thought, our practice
+                brings together design, theory, and lived experience to shape projects across
+                residential, commercial, institutional, and masterplanning typologies. Every
+                commission is approached with the same rigour — contextual, considered, and crafted
+                to endure.
+              </p>
+              <p className="text-sm font-light leading-relaxed text-[#185B30] opacity-70">
+                Over 20 years of practice across Malaysia have given us a deep understanding of
+                place, climate, culture, and the communities we build for. We work closely with
+                clients, collaborators, and specialists to deliver architecture that is both
+                purposeful and lasting.
+              </p>
+              <Link
+                to="/people"
+                className="self-start inline-block text-sm tracking-[0.08em] font-light lowercase text-[#185B30] px-6 py-3 border border-[#185B30]/40 transition-all duration-300 mt-2 hover:border-[#185B30] hover:bg-[#185B30]/5"
+              >
+                meet the team
+              </Link>
+            </div>
+
+          </div>
+        </section>
+
+        {/* ── Philosophy Section ── */}
         <section className="relative w-full h-screen overflow-hidden flex flex-col md:flex-row">
 
-          {/* Video — full width on mobile, left half on desktop */}
           <video
             className="w-full h-1/2 md:w-1/2 md:h-full object-cover"
             style={{ opacity: 0.8, objectPosition: '10% center' }}
@@ -162,10 +230,8 @@ export default function Home() {
             poster="/general/HomeCP_Philosophy.avif"
           />
 
-          {/* Bottom half on mobile, right half on desktop — white background */}
           <div className="w-full h-1/2 md:w-1/2 md:h-full bg-white" />
 
-          {/* Text — bottom center on mobile, overlaps on desktop */}
           <div className="absolute inset-x-0 bottom-0 h-1/2 md:inset-0 md:h-auto z-10 flex items-center px-8 md:px-0">
             <div className="md:ml-[45%] max-w-none w-full text-left md:text-left">
               <p className="text-xs tracking-[0.1em] lowercase font-light mb-1 opacity-60">
@@ -191,7 +257,7 @@ export default function Home() {
 
         </section>
 
-        {/* Partners Section */}
+        {/* ── Partners Section ── */}
         <section className="relative w-full h-screen overflow-hidden">
 
           <video
