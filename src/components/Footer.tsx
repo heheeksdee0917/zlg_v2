@@ -83,6 +83,18 @@ export default function Footer() {
           <p className="text-xs" style={{ color: '#185B30' }}>
             © {new Date().getFullYear()} zlgdesign. all rights reserved.
           </p>
+          <p className="text-xs mt-1" style={{ color: '#185B30' }}>
+            Created & Designed by{' '}
+            <a
+              href="https://swayed.my"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: '#185B30' }}
+              className="underline hover:opacity-70 transition-opacity"
+            >
+              swayed.my
+            </a>
+          </p>
         </div>
       </div>
     </footer>

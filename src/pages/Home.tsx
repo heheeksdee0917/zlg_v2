@@ -192,14 +192,14 @@ export default function Home() {
                 zlgdesign is an architecture practice rooted in kuala lumpur, malaysia —
                 building meaningful spaces for over two decades.
               </p>
-              <p className="text-sm font-light leading-relaxed text-[#185B30] opacity-70">
+              <p className="text-sm font-light leading-relaxed text-[#185B30] opacity-70 lowercase">
                 Founded on the belief that architecture is inseparable from thought, our practice
                 brings together design, theory, and lived experience to shape projects across
                 residential, commercial, institutional, and masterplanning typologies. Every
                 commission is approached with the same rigour — contextual, considered, and crafted
                 to endure.
               </p>
-              <p className="text-sm font-light leading-relaxed text-[#185B30] opacity-70">
+              <p className="text-sm font-light leading-relaxed text-[#185B30] opacity-70 lowercase">
                 Over 20 years of practice across Malaysia have given us a deep understanding of
                 place, climate, culture, and the communities we build for. We work closely with
                 clients, collaborators, and specialists to deliver architecture that is both
