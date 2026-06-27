@@ -16,7 +16,7 @@ image: string;
 export interface JourneyPartner {
   name: string;
   title: string;
-  image?: string; // Optional - only 4 will have images
+  image?: string;
 }
 
 export interface SignatureProject {
@@ -30,24 +30,6 @@ export interface TimelineMilestone {
 }
 
 export const team: Team[] = [
-  {
-    id: 2,
-    name: 'Ar. Athirah Yen',
-    role: 'LAM AG/A 678, BSc. Arch (Hons) Taylor‘s, M. Arch UM, LAM/RIBA PART II',
-    image: 'People/athirah.jpeg',
-  },
-  {
-    id: 3,
-    name: 'haziqah ngasri',
-    role: 'Dipl. Fine Art, Bsc. Arch (Hons) UITM, LAM Part I',
-    image: 'People/haziqah.jpeg',
-  },
-  {
-    id: 4,
-    name: 'Hester Chang',
-    role: 'BSc. Arch (Hons) Taylor’s, LAM Part I',
-    image: 'People/hester.jpeg',
-  },
   {
     id: 5,
     name: 'shu herng',
