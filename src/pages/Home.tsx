@@ -46,7 +46,7 @@ export default function Home() {
     <>
       <SEO
         title="zlgdesign | Award-Winning Architect in Kuala Lumpur (KL), Malaysia"
-        description="zlgdesign is an award-winning architecture firm in Kuala Lumpur with 20+ years of experience. We specialise in residential, commercial, institutional, and masterplanning projects across Malaysia."
+        description="zlgdesign is an award-winning architecture firm in Kuala Lumpur with 30+ years of experience. We specialise in residential, commercial, institutional, and masterplanning projects across Malaysia."
         canonical="https://zlgdesign.com/"
         image="/projects/boh-visitor/A1.avif"
       />
@@ -163,7 +163,7 @@ export default function Home() {
                   about the practice
                 </p>
                 <p className="text-5xl md:text-6xl font-light lowercase tracking-tight leading-none text-[#185B30]">
-                  20+
+                  30+
                 </p>
                 <p className="text-sm tracking-[0.1em] lowercase font-light text-[#185B30] opacity-60 mt-2">
                   years in practice
@@ -200,7 +200,7 @@ export default function Home() {
                 to endure.
               </p>
               <p className="text-sm font-light leading-relaxed text-[#185B30] opacity-70 lowercase">
-                Over 20 years of practice across Malaysia have given us a deep understanding of
+                Over 30 years of practice across Malaysia have given us a deep understanding of
                 place, climate, culture, and the communities we build for. We work closely with
                 clients, collaborators, and specialists to deliver architecture that is both
                 purposeful and lasting.
