@@ -1,3 +1,21 @@
+/**
+ * One step in a project page's running order, below the cover image.
+ *
+ * Both kinds count from 1, in the order you wrote them:
+ *   - `images: [1, 2]`  → the 1st and 2nd image AFTER the cover (so `images[1]`, `images[2]`).
+ *                         Two numbers make a wide + narrow row; one makes a full-width image.
+ *   - `paragraphs: [2]` → the 2nd entry of `detailContent`.
+ *
+ * Where the text lands:
+ *   - before the first `images` block  → beside the title at the top of the page
+ *   - after a two-image row            → inside that row, stacked under the narrow image, so
+ *                                        the image and its text share one rectangle
+ *   - anywhere else (e.g. after a full-width image) → its own band across the page
+ */
+export type ProjectLayoutBlock =
+  | { type: 'images'; images: number[] }
+  | { type: 'text'; paragraphs: number[] };
+
 export interface Project {
   id: string;
   slug: string;
@@ -6,11 +24,18 @@ export interface Project {
   location: string;
   heroImage: string;
   images: string[];
+  /** Optional caption per image, indexed the same as `images`. Sparse arrays are fine. */
+  imageCaptions?: string[];
   detailContent?: Array<{
     type: string;
     heading?: string;
     content: string;
   }>;
+  /**
+   * Running order of the page. Omit it and the page falls back to its default:
+   * every paragraph beside the title, then all images in wide/narrow rows.
+   */
+  layout?: ProjectLayoutBlock[];
   seo: {
     title: string;
     description: string;
@@ -47,6 +72,19 @@ export const projects: Project[] = [
       canonical: 'https://zlgdesign.com/projects/tepian-tunku',
       image: '/projects/tepian-tunku/A4.avif'
     },
+    // Running order below the cover. Paragraph 1 sits beside the title because it comes
+    // before the first images block; paragraphs 2 and 3 sit under the narrow image of the
+    // row each one follows.
+    layout: [
+      { type: 'text', paragraphs: [1] },
+      { type: 'images', images: [1, 2] },
+      { type: 'text', paragraphs: [2] },
+      { type: 'images', images: [3, 4] },
+      { type: 'text', paragraphs: [3] },
+      { type: 'images', images: [5] },
+    ],
+    // Captions appear under gallery images, indexed as `images`. Leave a hole to skip one:
+    // imageCaptions: [, , 'Caption for the third image.'],
     heroImage: '/projects/tepian-tunku/A4.avif',
     images: [
       '/projects/tepian-tunku/A4.avif',

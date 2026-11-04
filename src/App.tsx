@@ -9,6 +9,7 @@ const Home = lazy(() => import('./pages/Home'));
 const Philosophy = lazy(() => import('./pages/Philosophy'));
 const Projects = lazy(() => import('./pages/Projects'));
 const ProjectDetails = lazy(() => import('./pages/ProjectDetails'));
+const ProjectDetailsUpdated = lazy(() => import('./pages/ProjectDetailsUpdated'));
 const People = lazy(() => import('./pages/People'));
 const Partner = lazy(() => import('./pages/Partner'));
 const ContactUs = lazy(() => import('./pages/ContactUs'));
@@ -23,7 +24,8 @@ function ScrollToTop() {
 
 function AppLayout() {
   const { pathname } = useLocation();
-  const hideFooter = /^\/projects\/.+/.test(pathname);
+  // Both the live detail page and its preview render their own footer.
+  const hideFooter = /^\/projects\/.+/.test(pathname) || /^\/test\/updated\/.+/.test(pathname);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -38,6 +40,8 @@ function AppLayout() {
           <Route path="/philosophy" element={<Philosophy />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:slug" element={<ProjectDetails />} />
+          {/* Client preview of the reworked layout — not linked from the site. */}
+          <Route path="/test/updated/:slug" element={<ProjectDetailsUpdated />} />
           <Route path="/people" element={<People />} />
           <Route path="/partner" element={<Partner />} />
           <Route path="/contact" element={<ContactUs />} />
