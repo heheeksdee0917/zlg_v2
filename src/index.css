@@ -68,3 +68,13 @@
     border-radius: 999px;
   }
 }
+/* Entrance animations start hidden, so make sure they never stay that way
+   for anyone who has asked for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  [data-section],
+  [data-section] * {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
